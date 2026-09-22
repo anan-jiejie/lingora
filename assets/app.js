@@ -88,6 +88,10 @@ const LANG_LABEL = {
   fr: 'Français', de: 'Deutsch', es: 'Español', ru: 'Русский', auto: '自动判断',
 };
 
+// 本地模型：体积从小到大。加载失败时降级到 FALLBACK_MODEL。
+const MODEL_LABEL = { 'whisper-tiny': 'Tiny', 'whisper-base': 'Base' };
+const FALLBACK_MODEL = 'whisper-tiny';
+
 /* ---------------- 小工具 ---------------- */
 const pad = (n, w = 2) => String(n).padStart(w, '0');
 const fmtClock = (sec) => `${pad(Math.floor(sec / 60))}:${pad(Math.floor(sec % 60))}`;
@@ -608,6 +612,29 @@ async function getPipeline(modelId) {
   return pipe;
 }
 
+/**
+ * 加载模型；失败且原因像「文件取不到」时，自动降级到最小的 tiny。
+ *
+ * 为什么需要：大模型在弱网下可能加载不下来。与其让用户卡在一个
+ * 「加载失败」上重新选模型再试，不如换更小的模型先把活干完，
+ * 同时同步更新下拉框，保证界面显示与实际用的模型一致。
+ */
+async function getPipelineWithFallback(modelId) {
+  try {
+    return await getPipeline(modelId);
+  } catch (err) {
+    const msg = String((err && err.message) || err);
+    const looksLikeMissing = /404|not found|failed to fetch|load|network/i.test(msg);
+    if (modelId === FALLBACK_MODEL || !looksLikeMissing) throw err;
+
+    const from = MODEL_LABEL[modelId] || modelId;
+    setState(`「${from}」没加载成功，已自动改用体积更小的 Tiny 模型继续，进度不受影响。`);
+    el.modelSel.value = FALLBACK_MODEL;
+    state.model = FALLBACK_MODEL;
+    return await getPipeline(FALLBACK_MODEL);
+  }
+}
+
 /** 把 Blob 解成 Whisper 需要的 16kHz 单声道 Float32Array */
 async function decodeToPcm(blob) {
   const buf = await blob.arrayBuffer();
@@ -633,7 +660,7 @@ async function transcribeWithWhisper(blob) {
   try {
     setState('正在加载本地模型…首次使用要读取模型文件，之后就快了。');
     showProgress(1, '加载运行时…');
-    const pipe = await getPipeline(state.model);
+    const pipe = await getPipelineWithFallback(state.model);
 
     setState('模型就绪，正在解码音频…');
     showProgress(100, '解码音频…');
