@@ -6,6 +6,18 @@
 
 ---
 
+## 线上地址
+
+**https://anan-jiejie.github.io/lingora/**
+
+| 项 | 值 |
+|---|---|
+| 仓库 | https://github.com/anan-jiejie/lingora |
+| 托管方式 | GitHub Pages · `Deploy from a branch` |
+| 分支 / 目录 | `main` + `/ (root)` |
+| HTTPS | 已强制 |
+| 发布提交 | `081aadc`（新增 `.nojekyll` 以关闭 Jekyll 处理） |
+
 ## 目录结构
 
 ```
@@ -14,6 +26,8 @@ lingora-site/
 ├── assets/
 │   ├── styles.css      # 设计令牌 + 全部样式 + 响应式断点
 │   └── main.js         # 全部交互（无任何第三方依赖）
+├── .nojekyll           # 空文件，告诉 GitHub Pages 跳过 Jekyll 处理
+├── .gitignore          # 排除 .verify/ 等本地校验产物
 └── README.md
 ```
 
