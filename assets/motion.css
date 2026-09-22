@@ -1,0 +1,125 @@
+/* ==========================================================================
+   Lingora 灵语同传 · 动效层样式
+   文件：assets/motion.css
+   --------------------------------------------------------------------------
+   设计原则
+   1) 命名全部加 lingora- 前缀，与主样式表 styles.css 零命名冲突
+   2) 所有规则挂在 html.has-gsap 下 —— GSAP 没加载时本文件整体失效，
+      页面自动回落到 main.js 的 IntersectionObserver 揭示逻辑，不会白屏
+   3) 只接管动画属性（transform / opacity / visibility），不碰布局尺寸，
+      于是 1440 / 1024 / 760 三档断点的既有排版完全不受影响
+   4) 关键帧曲线与 styles.css 的 --ease / --ease-out 一一对应
+      （JS 侧用 CustomEase 复刻同一组贝塞尔值）
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   0. 接管声明
+   GSAP 一旦接管，就必须关掉 [data-reveal] 的 CSS transition，
+   否则每帧写入的 inline style 会被过渡二次插值，出现拖尾抖动
+   -------------------------------------------------------------------------- */
+html.has-gsap [data-reveal] {
+  transition: none;
+}
+
+/* 用户偏好减少动效时，直接给终态，不参与任何补间 */
+html.has-gsap.lingora-static [data-reveal] {
+  opacity: 1;
+  transform: none;
+}
+
+/* --------------------------------------------------------------------------
+   1. 首屏大标题 · 逐行遮罩揭示
+   JS 按 <br> 把标题拆成若干 .lingora-line，内层 span 向上推出遮罩
+   -------------------------------------------------------------------------- */
+.lingora-line {
+  display: block;
+  overflow: hidden;
+  /* 给中文下沿留出空间，避免「字底被裁」 */
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
+}
+.lingora-line > span {
+  display: block;
+}
+
+/* --------------------------------------------------------------------------
+   2. 顶部滚动进度条
+   纯装饰，pointer-events 关闭；打印时隐藏
+   -------------------------------------------------------------------------- */
+.lingora-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 130;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  background: linear-gradient(
+    90deg,
+    var(--lang-a) 0%,
+    var(--lang-a-soft) 48%,
+    var(--lang-b) 100%
+  );
+  box-shadow: 0 0 14px -2px rgba(18, 225, 176, 0.55);
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   4. 卡片 3D 倾斜
+   透视放在父级 .grid 上，让同排卡片的灭点一致，观感更稳
+   -------------------------------------------------------------------------- */
+html.has-gsap .lingora-tilt-scope {
+  perspective: 1200px;
+}
+html.has-gsap .lingora-tilt {
+  /* 关键：把 transform 从过渡列表里摘掉。
+     原生 hover 的 translateY(-4px) 会被 GSAP 写入的 inline transform 覆盖，
+     若 transition 里还留着 transform，两者会互相插值出一层拖影。
+     阴影与描边的过渡照旧保留，hover 的「浮起感」仍在。 */
+  transition: box-shadow 0.35s var(--ease), border-color 0.35s var(--ease);
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+/* --------------------------------------------------------------------------
+   5. 主推方案卡 · 呼吸光晕
+   GSAP 只驱动 --lingora-halo 这一个数值，其余交给 CSS
+   -------------------------------------------------------------------------- */
+.plan--featured {
+  position: relative;
+}
+html.has-gsap .plan--featured::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    60% 50% at 50% 0%,
+    rgba(18, 225, 176, 0.18),
+    transparent 72%
+  );
+  /* GSAP 只推 --lingora-halo 这一个数值，由这里换算成不透明度。
+     比在 rgba() 里塞 calc(var()) 稳妥，老一点的解析器也认。 */
+  opacity: var(--lingora-halo, 0.35);
+}
+
+/* --------------------------------------------------------------------------
+   7. 可访问性
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html.has-gsap .lingora-tilt,
+  html.has-gsap .lingora-tilt > * {
+    transition: none !important;
+  }
+}
+
+@media print {
+  .lingora-progress {
+    display: none !important;
+  }
+  html.has-gsap .lingora-stage {
+    opacity: 1 !important;
+  }
+}

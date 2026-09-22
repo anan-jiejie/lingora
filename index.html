@@ -14,6 +14,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="assets/styles.css" />
+<link rel="stylesheet" href="assets/motion.css" />
 <noscript><style>[data-reveal]{opacity:1 !important;transform:none !important}</style></noscript>
 </head>
 <body>
@@ -576,6 +577,18 @@
   <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 15V5M5 10l5-5 5 5" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </button>
 
+<!-- ============ 动效层 ============
+     GSAP 为同源自托管，不走任何 CDN：
+     ① gsap.min.js       核心补间与缓动引擎
+     ② ScrollTrigger     滚动驱动（区块入场、进度条、视差）
+     ③ CustomEase        复刻 styles.css 的 --ease / --ease-out 贝塞尔曲线
+     脚本顺序有意义：三个依赖必须排在 main.js 之前，
+     这样 main.js 能通过 window.gsap 判断是否把 reveal 与计数让给动效层。
+-->
+<script src="assets/vendor/gsap/gsap.min.js" defer></script>
+<script src="assets/vendor/gsap/ScrollTrigger.min.js" defer></script>
+<script src="assets/vendor/gsap/CustomEase.min.js" defer></script>
 <script src="assets/main.js" defer></script>
+<script src="assets/motion.js" defer></script>
 </body>
 </html>

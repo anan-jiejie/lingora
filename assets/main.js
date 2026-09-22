@@ -15,6 +15,21 @@
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ------------------------------------------------------------------
+     动效层交接开关
+     ------------------------------------------------------------------
+     assets/motion.js 是后加载的 GSAP 动效层。凡它接管的动画（滚动揭示、
+     数字计数、首屏入场），本文件就不再插手 —— 两套东西同时写 opacity
+     与 transform 只会互相打架。
+
+     判定条件必须与 motion.js 的守卫完全一致：
+       · 用户未开启「减少动效」，且
+       · GSAP 三个文件都成功加载
+     任何一条不满足，都回落到本文件原有的 IntersectionObserver 实现。
+     ------------------------------------------------------------------ */
+  const gsapActive =
+    !reduced && typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined';
+
+  /* ------------------------------------------------------------------
      1. 导航
      ------------------------------------------------------------------ */
   const nav = $('#nav');
@@ -314,9 +329,14 @@
 
   /* ------------------------------------------------------------------
      3. 滚动揭示 + 数字计数
+     动效层就绪时这两段整体跳过，交给 GSAP 的 ScrollTrigger.batch
      ------------------------------------------------------------------ */
   const revealEls = $$('[data-reveal]');
-  if (reduced || !('IntersectionObserver' in window)) {
+  if (gsapActive) {
+    /* GSAP 接管：什么都不做。
+       首屏的 [data-reveal] 由 motion.js 的时间轴负责，
+       首屏之外的由 ScrollTrigger.batch 负责。 */
+  } else if (reduced || !('IntersectionObserver' in window)) {
     revealEls.forEach((el) => el.classList.add('is-visible'));
   } else {
     const revealObs = new IntersectionObserver(
@@ -369,7 +389,10 @@
 
   const counters = $$('[data-count]');
   if (counters.length) {
-    if (reduced || !('IntersectionObserver' in window)) {
+    if (gsapActive) {
+      /* GSAP 接管：由 motion.js 的 countUp() 用补间驱动数字
+         （比手写 requestAnimationFrame + easeOutQuart 更易与整站节奏对齐） */
+    } else if (reduced || !('IntersectionObserver' in window)) {
       // 保持 HTML 里的静态文本，不再动画
     } else {
       const countObs = new IntersectionObserver(
@@ -454,8 +477,12 @@
     });
   }
 
-  /* 首帧：确保 Hero 内容不被 reveal 卡住 */
-  window.addEventListener('load', () => {
-    $$('.hero [data-reveal]').forEach((el) => el.classList.add('is-visible'));
-  });
+  /* 首帧：确保 Hero 内容不被 reveal 卡住
+     动效层接管时不能执行 —— 提前加 is-visible 会把 GSAP 的入场起点
+     直接抹掉，首屏就会「瞬间出现」而不是逐行推出 */
+  if (!gsapActive) {
+    window.addEventListener('load', () => {
+      $$('.hero [data-reveal]').forEach((el) => el.classList.add('is-visible'));
+    });
+  }
 })();
