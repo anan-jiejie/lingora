@@ -86,60 +86,59 @@
   }
 
   /* ------------------------------------------------------------------
-     2. Hero 实时同传演示窗
+     2. Hero 实时转写演示窗
+     小字（着色）= 实时识别流，尚未加标点
+     大字（白色）= 经过断句与标点整理后的最终文本
      ------------------------------------------------------------------ */
-  const DEMO_PAIRS = {
-    en: {
-      from: '英语',
-      to: '中文',
+  const DEMO_MODES = {
+    zh: {
+      label: '中文',
       turns: [
         {
-          meta: 'Speaker A · 英语原文',
-          src: "Good morning, everyone. Let's begin today's meeting.",
-          dst: '大家早上好，让我们开始今天的会议。',
+          meta: '说话人 A · 00:03',
+          src: '大家早上好我们开始今天的会议',
+          dst: '大家早上好，我们开始今天的会议。',
           tone: 'mint'
         },
         {
-          meta: 'Speaker B · 英语原文',
-          src: "Regarding the Q1 revenue report, we've seen significant growth.",
-          dst: '关于第一季度的营收报告，我们看到了显著的增长。',
+          meta: '说话人 B · 00:11',
+          src: '好的我先把第一季度的数据调出来',
+          dst: '好的，我先把第一季度的数据调出来。',
+          tone: 'coral'
+        }
+      ]
+    },
+    en: {
+      label: 'English',
+      turns: [
+        {
+          meta: 'Speaker A · 00:03',
+          src: 'good morning everyone lets begin today meeting',
+          dst: "Good morning, everyone. Let's begin today's meeting.",
           tone: 'mint'
+        },
+        {
+          meta: 'Speaker B · 00:11',
+          src: 'sure let me pull up the q one numbers first',
+          dst: 'Sure, let me pull up the Q1 numbers first.',
+          tone: 'coral'
         }
       ]
     },
     ja: {
-      from: '日语',
-      to: '中文',
+      label: '日本語',
       turns: [
         {
-          meta: 'Speaker C · 日语原文',
-          src: '来月の見通しについて、詳しく説明してください。',
-          dst: '请详细说明一下下个月的展望。',
-          tone: 'coral'
-        },
-        {
-          meta: 'Speaker C · 日语原文',
-          src: 'まず、現在の課題を整理させてください。',
-          dst: '首先，请让我先梳理一下当前的课题。',
-          tone: 'coral'
-        }
-      ]
-    },
-    es: {
-      from: '西班牙语',
-      to: '中文',
-      turns: [
-        {
-          meta: 'Speaker D · 西语原文',
-          src: 'Buenos días, empecemos la reunión de hoy.',
-          dst: '早上好，我们开始今天的会议吧。',
+          meta: '話者 A · 00:03',
+          src: 'おはようございますそれでは会議を始めましょう',
+          dst: 'おはようございます。それでは会議を始めましょう。',
           tone: 'mint'
         },
         {
-          meta: 'Speaker D · 西语原文',
-          src: 'Necesitamos confirmar el precio y la fecha de entrega.',
-          dst: '我们需要确认一下价格和交货日期。',
-          tone: 'mint'
+          meta: '話者 B · 00:11',
+          src: 'はいまず第一四半期のデータを確認します',
+          dst: 'はい、まず第一四半期のデータを確認します。',
+          tone: 'coral'
         }
       ]
     }
@@ -147,8 +146,7 @@
 
   const demoTurns = $('#demoTurns');
   const demoRoot = $('#demo');
-  const langFrom = $('#langFrom');
-  const langTo = $('#langTo');
+  const demoLang = $('#demoLang');
   const demoTimer = $('#demoTimer');
   const switchBtns = $$('.demo__switch button');
 
@@ -165,7 +163,7 @@
   }
 
   function paintTimer() {
-    if (demoTimer) demoTimer.textContent = `${fmt(elapsed)} / 40:00`;
+    if (demoTimer) demoTimer.textContent = fmt(elapsed);
   }
 
   function startTimer() {
@@ -232,15 +230,14 @@
     return true;
   }
 
-  async function runDemo(pairKey) {
-    const pair = DEMO_PAIRS[pairKey];
+  async function runDemo(modeKey) {
+    const pair = DEMO_MODES[modeKey];
     if (!pair || !demoTurns) return;
 
     runToken += 1;
     const token = runToken;
 
-    if (langFrom) langFrom.textContent = pair.from;
-    if (langTo) langTo.textContent = pair.to;
+    if (demoLang) demoLang.textContent = pair.label;
 
     if (demoRoot) {
       demoRoot.classList.add('is-swapping');
@@ -297,8 +294,8 @@
       });
     });
 
-    // 首屏进入后启动演示
-    const startDemo = () => runDemo('en');
+    // 首屏进入后启动演示（默认中文，与首屏高亮的按钮一致）
+    const startDemo = () => runDemo('zh');
     if ('IntersectionObserver' in window) {
       const demoObs = new IntersectionObserver(
         (entries) => {

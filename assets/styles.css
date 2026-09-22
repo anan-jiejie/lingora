@@ -1110,6 +1110,72 @@ img { max-width: 100%; display: block; }
   [data-reveal] { opacity: 1; transform: none; }
 }
 
+/* ============================================================
+   补充：功能状态徽章 / 纯文字兼容列表 / 三列版本计划
+   （随产品文案改版新增，均在文件末尾以保证覆盖优先级）
+   ============================================================ */
+
+/* 功能卡上的「可用 / 开发中」状态徽章 */
+.card__badge {
+  align-self: flex-start;
+  padding: 4px 11px;
+  border-radius: var(--r-pill);
+  background: #EAFBF5;
+  color: #0E9C7A;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .02em;
+}
+.card__badge--soon { background: #EFEFEC; color: #747C88; }
+.card__icon--muted { background: #EFEFEC; }
+
+/* 「配合软件」：纯文字列表，不使用任何第三方图形商标 */
+.softlist {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 44px;
+}
+.softlist span {
+  padding: 11px 20px;
+  border-radius: var(--r-sm);
+  background: var(--paper);
+  border: 1px solid var(--line-light);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--tx-on-light-hi);
+  transition: transform .25s var(--ease), border-color .25s var(--ease);
+}
+.softlist span:hover {
+  transform: translateY(-2px);
+  border-color: rgba(14, 156, 122, .45);
+}
+
+/* 版本计划：三列 */
+.plans--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.plan__badge--soon { background: #E7E9EC; color: #5B6472; }
+.plan__amount--text { font-size: 26px; color: var(--tx-on-light-mid); }
+
+/* 演示窗下方的读图说明 */
+.demo__hint {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--tx-low);
+  text-align: center;
+}
+
+/* trust 行去掉星标后为纯文字 */
+.hero__trust span { line-height: 1.65; }
+
+@media (max-width: 1024px) {
+  .plans--3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+  .plans--3 { grid-template-columns: minmax(0, 1fr); }
+}
+
 @media print {
   .nav, .to-top, .demo__switch { display: none; }
   body { background: #fff; color: #000; }

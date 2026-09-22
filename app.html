@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>在线语音转写 · Lingora</title>
+<meta name="description" content="打开网页就能用的语音转写工具：在线录音、实时语音识别、本地 Whisper 离线转写，可导出 TXT / SRT / VTT。无需注册，音频不上传服务器。" />
+<meta name="theme-color" content="#080D18" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23080D18'/%3E%3Cpath d='M6 22.5C6 14 10.5 8.5 16 8.5' stroke='%2312E1B0' stroke-width='3' stroke-linecap='round' fill='none'/%3E%3Cpath d='M26 9.5C26 18 21.5 23.5 16 23.5' stroke='%23FF7A5C' stroke-width='3' stroke-linecap='round' fill='none'/%3E%3Ccircle cx='16' cy='16' r='2.6' fill='%2312E1B0'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/styles.css" />
+<link rel="stylesheet" href="assets/app.css" />
+</head>
+<body class="app-body">
+
+<a class="skip-link" href="#workspace">跳到工具区</a>
+
+<!-- ============ 工具页顶栏 ============ -->
+<header class="app-nav">
+  <div class="app-nav__inner">
+    <a class="brand" href="index.html" aria-label="返回 Lingora 首页">
+      <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true">
+        <path d="M4.5 22.5C4.5 13.5 9.5 7.5 16 7.5" stroke="#12E1B0" stroke-width="3" stroke-linecap="round" fill="none"/>
+        <path d="M27.5 9.5C27.5 18.5 22.5 24.5 16 24.5" stroke="#FF7A5C" stroke-width="3" stroke-linecap="round" fill="none"/>
+        <circle cx="16" cy="16" r="2.6" fill="#12E1B0"/>
+      </svg>
+      <span class="brand__name">Lingora</span>
+    </a>
+
+    <span class="app-nav__tag">在线语音转写</span>
+
+    <div class="app-nav__actions">
+      <span class="privacy-chip" title="本地模型模式下音频不会离开你的设备">
+        <span class="privacy-chip__dot" aria-hidden="true"></span>
+        无需注册 · 音频不外传
+      </span>
+      <a class="btn btn--ghost btn--sm" href="index.html">返回首页</a>
+    </div>
+  </div>
+</header>
+
+<main class="app-main" id="workspace">
+
+  <div class="app-intro">
+    <h1 class="app-intro__title">把说的话，实时变成文字</h1>
+    <p class="app-intro__sub">点下面的按钮就能开始。浏览器只会问你一次麦克风权限，之后所有处理都在这个页面里完成。</p>
+  </div>
+
+  <!-- ============ 环境警告（JS 关闭 / 非安全上下文 / 浏览器不支持） ============ -->
+  <div class="app-alert app-alert--error" id="envAlert" hidden>
+    <p id="envAlertText"></p>
+  </div>
+
+  <div class="app-grid">
+
+    <!-- ---------- 左侧：录音控制 ---------- -->
+    <section class="panel panel--control" aria-labelledby="ctrlTitle">
+      <h2 class="panel__title" id="ctrlTitle">1 · 录音设置</h2>
+
+      <!-- 识别引擎 -->
+      <div class="field">
+        <span class="field__label">识别引擎</span>
+        <div class="engine" role="radiogroup" aria-label="选择识别引擎">
+          <label class="engine__opt">
+            <input type="radio" name="engine" value="webspeech" checked />
+            <span class="engine__body">
+              <span class="engine__name">浏览器实时识别</span>
+              <span class="engine__desc">边说边出字，最省事。音频由浏览器厂商的语音服务处理。</span>
+              <span class="engine__state" data-engine-state="webspeech">检测中…</span>
+            </span>
+          </label>
+
+          <label class="engine__opt">
+            <input type="radio" name="engine" value="whisper" />
+            <span class="engine__body">
+              <span class="engine__name">本地 Whisper 模型</span>
+              <span class="engine__desc">录完再转写，音频留在本机。首次使用需下载模型。</span>
+              <span class="engine__state" data-engine-state="whisper">待首次下载</span>
+            </span>
+          </label>
+        </div>
+      </div>
+
+      <!-- 语言 -->
+      <div class="field">
+        <label class="field__label" for="langSel">识别语言</label>
+        <select class="field__select" id="langSel">
+          <option value="zh" selected>中文（普通话）</option>
+          <option value="en">English</option>
+          <option value="yue">粤语</option>
+          <option value="ja">日本語</option>
+          <option value="ko">한국어</option>
+          <option value="fr">Français</option>
+          <option value="de">Deutsch</option>
+          <option value="es">Español</option>
+          <option value="ru">Русский</option>
+          <option value="auto">自动判断（仅本地模型）</option>
+        </select>
+      </div>
+
+      <!-- 模型大小（仅本地模型） -->
+      <div class="field" id="modelField" hidden>
+        <label class="field__label" for="modelSel">
+          模型大小
+          <span class="field__hint" id="modelHint"></span>
+        </label>
+        <select class="field__select" id="modelSel">
+          <option value="whisper-tiny">Tiny · 内置 42 MB · 最快，吃内存最少</option>
+          <option value="whisper-base" selected>Base · 内置 76 MB · 推荐，准确率更好</option>
+        </select>
+        <p class="field__note">
+          模型随本站一起托管，直接从本站加载，不依赖任何境外服务，也不会把音频发出去。首次加载后浏览器会缓存，第二次打开基本是秒进。
+        </p>
+      </div>
+
+      <!-- 录音按钮 -->
+      <div class="rec">
+        <button class="rec__btn" id="recBtn" type="button" aria-describedby="recState">
+          <span class="rec__ring" aria-hidden="true"></span>
+          <span class="rec__label" id="recLabel">开始录音</span>
+        </button>
+
+        <div class="rec__meta">
+          <span class="rec__timer" id="recTimer">00:00</span>
+          <canvas class="rec__wave" id="wave" width="520" height="48" aria-hidden="true"></canvas>
+        </div>
+      </div>
+
+      <p class="rec__state" id="recState" role="status" aria-live="polite">等待开始</p>
+
+      <!-- 进度条（模型下载 / 转写） -->
+      <div class="prog" id="progWrap" hidden>
+        <div class="prog__bar"><span class="prog__fill" id="progFill"></span></div>
+        <p class="prog__text" id="progText">准备中…</p>
+      </div>
+
+      <!-- 回放 -->
+      <div class="playback" id="playback" hidden>
+        <span class="playback__label">刚才这段录音</span>
+        <audio id="audioEl" controls preload="metadata"></audio>
+        <button class="btn btn--outline btn--sm" type="button" id="retranscribeBtn">用本地模型重新转写</button>
+      </div>
+    </section>
+
+    <!-- ---------- 右侧：转写结果 ---------- -->
+    <section class="panel panel--result" aria-labelledby="resultTitle">
+      <div class="result__head">
+        <h2 class="panel__title" id="resultTitle">2 · 转写结果</h2>
+        <div class="result__stats">
+          <span id="statWords">0 字</span>
+          <span class="result__dot" aria-hidden="true"></span>
+          <span id="statEngine">未开始</span>
+        </div>
+      </div>
+
+      <p class="result__tip" id="resultTip">文字会随你说话自动出现。识别完可以直接在这里修改。</p>
+
+      <div class="transcript" id="transcript" contenteditable="true" spellcheck="false"
+           role="textbox" aria-multiline="true" aria-label="转写文本，可直接编辑"
+           data-placeholder="转写结果会出现在这里，你也可以直接在这里打字。"></div>
+
+      <div class="interim" id="interim" aria-live="polite"></div>
+
+      <div class="result__actions">
+        <button class="btn btn--outline btn--sm" type="button" id="copyBtn">复制全文</button>
+        <button class="btn btn--outline btn--sm" type="button" id="dlTxtBtn">下载 TXT</button>
+        <button class="btn btn--outline btn--sm" type="button" id="dlSrtBtn">下载 SRT 字幕</button>
+        <button class="btn btn--outline btn--sm" type="button" id="dlVttBtn">下载 VTT 字幕</button>
+        <button class="btn btn--ghost-danger btn--sm" type="button" id="clearBtn">清空</button>
+      </div>
+
+      <p class="result__note" id="tsNote" hidden>
+        浏览器实时识别只返回文字、不返回逐句时间点，所以这份字幕的时间戳是按每句话识别到的时刻估算的，可能有偏差。需要精确到句的时间轴，点左侧「用本地模型重新转写」。
+      </p>
+    </section>
+  </div>
+
+  <!-- ============ 用完之后才出现的下载入口 ============ -->
+  <section class="afteruse" id="afterUse">
+    <div class="afteruse__inner">
+      <p class="afteruse__eyebrow" id="afterUseEyebrow">用顺手了再往下看</p>
+      <h2 class="afteruse__title" id="afterUseTitle">网页版够用的话，就继续用网页版</h2>
+      <p class="afteruse__desc" id="afterUseDesc">
+        它已经能做完整的事了。桌面版还在开发中——如果你需要把在线会议、网课、视频里的声音也转成文字，那才值得装。
+      </p>
+      <ul class="afteruse__list" hidden id="afterUseList">
+        <li>直接捕获系统声音，不用外放给麦克风听</li>
+        <li>全局快捷键开始 / 停止</li>
+        <li>模型本地常驻，启动即用，不用等下载</li>
+      </ul>
+      <div class="afteruse__btns">
+        <a class="btn btn--mint" href="index.html#pricing">了解后续计划</a>
+        <button class="btn btn--ghost" type="button" id="stayBtn">继续用网页版</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="app-footer">
+  <div class="app-footer__inner">
+    <p>Lingora · 在线语音转写工具</p>
+    <p>
+      <a href="index.html#faq">音频如何处理</a>
+      <span aria-hidden="true">·</span>
+      <a href="index.html">返回首页</a>
+    </p>
+  </div>
+</footer>
+
+<script type="module" src="assets/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+# 自托管运行时与模型：必须与上游逐字节一致
+# 本机 core.autocrlf=true 会把 LF 换成 CRLF，对这些文件会造成内容漂移，
+# 所以显式关闭换行符转换与文本 diff（否则每次改动都会产生巨大的伪 diff）。
+assets/vendor/**  -text -diff
+
+# 站点自身的文本资源走正常处理
+*.html  text
+*.css   text

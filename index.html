@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>Lingora 灵语同传 · 近乎零延迟的 AI 实时同声传译与会议助理</title>
-<meta name="description" content="Lingora 基于端到端 AI 语音大模型，提供近乎零延迟的实时同声传译、双屏双语字幕与 AI 会议纪要，支持 60+ 语言，无缝适配 Zoom、Teams、Google Meet。" />
+<title>Lingora · 打开网页就能用的实时语音转写工具</title>
+<meta name="description" content="Lingora 是一款直接在浏览器里运行的语音转写工具：在线录音、实时语音识别、一键导出 TXT / SRT / VTT。无需下载、无需注册，音频不上传服务器，免费不限时长。" />
 <meta name="theme-color" content="#080D18" />
-<meta property="og:title" content="Lingora 灵语同传 · 让每一场跨语言会议都像母语沟通一样自然" />
-<meta property="og:description" content="近乎零延迟的 AI 实时同声传译与会议助理，支持 60+ 语言、双屏双语字幕、AI 会议纪要。" />
+<meta property="og:title" content="Lingora · 让说的每一句话，都实时变成文字" />
+<meta property="og:description" content="浏览器里就能用的在线录音与语音识别工具。无需下载、无需注册，音频不上传服务器，可导出 TXT / SRT / VTT 字幕。" />
 <meta property="og:type" content="website" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23080D18'/%3E%3Cpath d='M6 22.5C6 14 10.5 8.5 16 8.5' stroke='%2312E1B0' stroke-width='3' stroke-linecap='round' fill='none'/%3E%3Cpath d='M26 9.5C26 18 21.5 23.5 16 23.5' stroke='%23FF7A5C' stroke-width='3' stroke-linecap='round' fill='none'/%3E%3Ccircle cx='16' cy='16' r='2.6' fill='%2312E1B0'/%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -35,14 +35,13 @@
     <nav class="nav__links" id="navLinks" aria-label="主导航">
       <a href="#features">功能</a>
       <a href="#scenes">适用场景</a>
-      <a href="#integrations">平台集成</a>
-      <a href="#pricing">价格方案</a>
+      <a href="#integrations">配合软件</a>
+      <a href="#pricing">版本计划</a>
       <a href="#faq">常见问题</a>
     </nav>
 
     <div class="nav__actions">
-      <a class="nav__login" href="#cta">登录</a>
-      <a class="btn btn--mint btn--sm" href="#cta">免费试用</a>
+      <a class="btn btn--mint btn--sm" href="app.html">立即使用</a>
       <button class="burger" id="burger" type="button" aria-label="打开导航菜单" aria-expanded="false" aria-controls="mobileMenu">
         <span></span><span></span><span></span>
       </button>
@@ -52,10 +51,10 @@
   <div class="mobile-menu" id="mobileMenu" hidden>
     <a href="#features">功能</a>
     <a href="#scenes">适用场景</a>
-    <a href="#integrations">平台集成</a>
-    <a href="#pricing">价格方案</a>
+    <a href="#integrations">配合软件</a>
+    <a href="#pricing">版本计划</a>
     <a href="#faq">常见问题</a>
-    <a class="btn btn--mint" href="#cta">免费试用 40 分钟</a>
+    <a class="btn btn--mint" href="app.html">立即使用</a>
   </div>
 </header>
 
@@ -70,33 +69,24 @@
       <div class="hero__copy">
         <span class="chip chip--live" data-reveal>
           <span class="chip__dot" aria-hidden="true"></span>
-          端到端 AI 语音大模型 · 实时同声传译
+          浏览器本地处理 · 音频不上传服务器
         </span>
 
         <h1 class="hero__title" data-reveal style="--d:60ms">
-          让每一场跨语言会议<br />都像母语沟通一样自然
+          让说的每一句话<br />都实时变成文字
         </h1>
 
         <p class="hero__sub" data-reveal style="--d:120ms">
-          Lingora 基于端到端语音大模型，提供近乎零延迟的实时同传、双屏双语字幕与 AI 会议纪要，无缝适配 Zoom / Teams / Google Meet。
+          Lingora 在浏览器里完成录音与语音识别，边说边出字。无需安装、无需注册，转写结果可一键导出为文本或字幕文件。
         </p>
 
         <div class="hero__ctas" data-reveal style="--d:180ms">
-          <a class="btn btn--mint" href="#cta">免费试用 40 分钟</a>
+          <a class="btn btn--mint" href="app.html">立即在线使用</a>
           <a class="btn btn--ghost" href="#features">看看能做什么</a>
         </div>
 
         <div class="hero__trust" data-reveal style="--d:240ms">
-          <svg class="stars" viewBox="0 0 108 20" aria-label="5 星评分" role="img">
-            <g fill="#12E1B0">
-              <path d="M10 1.5l2.47 5.28 5.53.72-4.08 3.87 1.06 5.63L10 14.4l-4.98 2.6 1.06-5.63L2 7.5l5.53-.72z"/>
-              <path d="M32 1.5l2.47 5.28 5.53.72-4.08 3.87 1.06 5.63L32 14.4l-4.98 2.6 1.06-5.63L24 7.5l5.53-.72z"/>
-              <path d="M54 1.5l2.47 5.28 5.53.72-4.08 3.87 1.06 5.63L54 14.4l-4.98 2.6 1.06-5.63L46 7.5l5.53-.72z"/>
-              <path d="M76 1.5l2.47 5.28 5.53.72-4.08 3.87 1.06 5.63L76 14.4l-4.98 2.6 1.06-5.63L68 7.5l5.53-.72z"/>
-              <path d="M98 1.5l2.47 5.28 5.53.72-4.08 3.87 1.06 5.63L98 14.4l-4.98 2.6 1.06-5.63L90 7.5l5.53-.72z"/>
-            </g>
-          </svg>
-          <span>4.1 分 · Google Play　已获全球 10,000+ 团队信赖</span>
+          <span>无需注册　·　不限时长　·　完全免费</span>
         </div>
       </div>
 
@@ -105,20 +95,18 @@
           <div class="demo__bar">
             <span class="demo__live">
               <span class="demo__dot" aria-hidden="true"></span>
-              Lingora · 实时同传
+              Lingora · 实时转写
             </span>
             <span class="demo__lang">
-              <span id="langFrom">英语</span>
-              <svg viewBox="0 0 16 12" aria-hidden="true"><path d="M1 6h12l-4-4M13 6l-4 4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <span id="langTo">中文</span>
+              <span id="demoLang">中文</span>
             </span>
           </div>
 
           <div class="demo__turns" id="demoTurns" aria-live="polite">
             <div class="turn">
-              <p class="turn__meta">Speaker A · 英语原文</p>
-              <p class="turn__src turn__src--mint">Good morning, everyone. Let's begin today's meeting.</p>
-              <p class="turn__dst">大家早上好，让我们开始今天的会议。</p>
+              <p class="turn__meta">说话人 A · 00:03</p>
+              <p class="turn__src turn__src--mint">大家早上好我们开始今天的会议</p>
+              <p class="turn__dst">大家早上好，我们开始今天的会议。</p>
             </div>
           </div>
 
@@ -126,25 +114,27 @@
             <span class="demo__wave" aria-hidden="true">
               <i style="--h:40%"></i><i style="--h:75%"></i><i style="--h:52%"></i><i style="--h:95%"></i><i style="--h:62%"></i><i style="--h:34%"></i><i style="--h:80%"></i><i style="--h:48%"></i><i style="--h:88%"></i><i style="--h:56%"></i><i style="--h:28%"></i><i style="--h:70%"></i><i style="--h:44%"></i><i style="--h:82%"></i><i style="--h:58%"></i><i style="--h:36%"></i><i style="--h:66%"></i><i style="--h:46%"></i>
             </span>
-            <span class="demo__timer" id="demoTimer">01:24 / 40:00</span>
+            <span class="demo__timer" id="demoTimer">01:24</span>
           </div>
         </div>
 
-        <div class="demo__switch" role="group" aria-label="切换演示语言对">
-          <button type="button" class="is-active" data-pair="en">英语 → 中文</button>
-          <button type="button" data-pair="ja">日语 → 中文</button>
-          <button type="button" data-pair="es">西语 → 中文</button>
+        <div class="demo__switch" role="group" aria-label="切换演示语言">
+          <button type="button" class="is-active" data-pair="zh" aria-pressed="true">中文</button>
+          <button type="button" data-pair="en" aria-pressed="false">English</button>
+          <button type="button" data-pair="ja" aria-pressed="false">日本語</button>
         </div>
+
+        <p class="demo__hint">小字＝实时识别流　·　大字＝加标点断句后的整理结果</p>
       </div>
     </div>
   </div>
 
   <div class="container">
     <ul class="compliance" data-reveal>
-      <li>GDPR 合规</li>
-      <li>HIPAA 合规</li>
-      <li>ISO 27001 · 认证中</li>
-      <li>音频实时删除 · 不留存原始录音</li>
+      <li>音频在浏览器内处理 · 不上传服务器</li>
+      <li>无需注册登录</li>
+      <li>支持 99 种语言</li>
+      <li>可导出 TXT · SRT · VTT</li>
     </ul>
   </div>
 </section>
@@ -154,60 +144,66 @@
   <div class="container">
     <div class="sec-head sec-head--split" data-reveal>
       <div class="sec-head__left">
-        <p class="eyebrow eyebrow--dark">功能矩阵</p>
-        <h2 class="h2">AI 驱动的多语言会议助理</h2>
-        <p class="lead">不止于翻译。从听懂、理解到记录归档，把跨语言协作的每一步都接住。</p>
+        <p class="eyebrow eyebrow--dark">现在就能用</p>
+        <h2 class="h2">打开这个页面，就可以开始</h2>
+        <p class="lead">没有试用墙，没有时长限制，也没有要填的表单。下面标着「可用」的，此刻都在线上跑着。</p>
       </div>
-      <p class="sec-head__note">6 项能力 / 全部方案可用</p>
+      <p class="sec-head__note">4 项已可用 / 2 项开发中</p>
     </div>
 
     <div class="grid grid--3">
       <article class="card card--feature" data-reveal style="--d:0ms">
         <span class="card__icon">
-          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none"><path d="M4 9h13l-4-4" stroke="#0E9C7A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 15H7l4 4" stroke="#0E9C7A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none"><rect x="9" y="2.5" width="6" height="11" rx="3" stroke="#0E9C7A" stroke-width="1.8"/><path d="M5.5 11.5a6.5 6.5 0 0013 0" stroke="#0E9C7A" stroke-width="1.8" stroke-linecap="round"/><path d="M12 18v3.5" stroke="#0E9C7A" stroke-width="1.8" stroke-linecap="round"/></svg>
         </span>
-        <h3 class="card__title">实时双向同传</h3>
-        <p class="card__desc">端到端语音模型单次推理，近乎零延迟。自动识别语种，说话即出字幕，双向互译不用手动切换。</p>
+        <span class="card__badge">可用</span>
+        <h3 class="card__title">在线录音</h3>
+        <p class="card__desc">点一下就开始录。实时波形、计时、回放、重录都在同一页里，麦克风权限只用授权一次。</p>
       </article>
 
       <article class="card card--feature" data-reveal style="--d:60ms">
         <span class="card__icon">
-          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none"><rect x="2.5" y="4.5" width="19" height="13" rx="2.5" stroke="#0E9C7A" stroke-width="1.8"/><path d="M12 4.5v13" stroke="#0E9C7A" stroke-width="1.8"/><path d="M7.5 17.5l-1 2.5M16.5 17.5l1 2.5" stroke="#0E9C7A" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none"><path d="M3 6.5h9M7.5 6.5V4.5" stroke="#0E9C7A" stroke-width="1.8" stroke-linecap="round"/><path d="M5 10.5c0 5 3 8 7 8s7-3 7-8" stroke="#0E9C7A" stroke-width="1.8" stroke-linecap="round"/><path d="M16 4l1.2 2.6L20 8l-2.8 1.4L16 12l-1.2-2.6L12 8l2.8-1.4z" stroke="#E0603F" stroke-width="1.5" stroke-linejoin="round"/></svg>
         </span>
-        <h3 class="card__title">双屏双语字幕</h3>
-        <p class="card__desc">原文与译文分屏对照呈现，视线不用来回找。关键数字与专有名词可以当场核对，避免误读。</p>
+        <span class="card__badge">可用</span>
+        <h3 class="card__title">实时语音识别</h3>
+        <p class="card__desc">边说边出字，不用等录完。支持中文、英语、日语等 99 种语言，识别结果可以随时手动修正。</p>
       </article>
 
       <article class="card card--feature" data-reveal style="--d:120ms">
         <span class="card__icon">
-          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none"><path d="M6 3.5h8l4 4v13H6z" stroke="#0E9C7A" stroke-width="1.8" stroke-linejoin="round"/><path d="M14 3.5v4h4" stroke="#0E9C7A" stroke-width="1.8" stroke-linejoin="round"/><path d="M9.5 12.5h5M9.5 16h3" stroke="#0E9C7A" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5" stroke="#0E9C7A" stroke-width="1.8"/><path d="M2.5 9.5h19" stroke="#0E9C7A" stroke-width="1.8"/><path d="M6 14.5h5M6 17h3" stroke="#0E9C7A" stroke-width="1.6" stroke-linecap="round"/><path d="M15 13l1.6 3.4L20 18l-3.4 1.6L15 23l-1.6-3.4L10 18l3.4-1.6z" stroke="#E0603F" stroke-width="1.4" stroke-linejoin="round" transform="translate(0 -2)"/></svg>
         </span>
-        <h3 class="card__title">AI 会议纪要</h3>
-        <p class="card__desc">会后自动产出双语纪要、行动项与关键决策。支持自定义术语库，人名与型号不再被翻错。</p>
+        <span class="card__badge">可用</span>
+        <h3 class="card__title">本地模型转写</h3>
+        <p class="card__desc">切换到本地 Whisper 模型后，音频全程留在你的设备里解码推理，不依赖任何外部服务，长录音也能离线成文。</p>
       </article>
 
       <article class="card card--feature" data-reveal style="--d:0ms">
         <span class="card__icon card__icon--coral">
-          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none"><path d="M3.5 9.5v5h3l4.5 3.5v-12L6.5 9.5z" stroke="#E0603F" stroke-width="1.8" stroke-linejoin="round"/><path d="M14.5 9a4.2 4.2 0 010 6" stroke="#E0603F" stroke-width="1.8" stroke-linecap="round"/><path d="M17.5 6.5a8 8 0 010 11" stroke="#E0603F" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none"><path d="M6 3.5h8l4 4v13H6z" stroke="#E0603F" stroke-width="1.8" stroke-linejoin="round"/><path d="M14 3.5v4h4" stroke="#E0603F" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 12.5h6M9 15.5h6M9 18h3" stroke="#E0603F" stroke-width="1.6" stroke-linecap="round"/></svg>
         </span>
-        <h3 class="card__title">AI 语音播报</h3>
-        <p class="card__desc">用自然音色把译文读出来，可选男声女声并支持语音克隆。不必盯字幕，眼神始终留在对方身上。</p>
+        <span class="card__badge">可用</span>
+        <h3 class="card__title">导出与复制</h3>
+        <p class="card__desc">全文可编辑、可复制，一键导出 TXT 纯文本，或带时间戳的 SRT / VTT 字幕文件，直接拖进剪辑软件就能用。</p>
       </article>
 
       <article class="card card--feature" data-reveal style="--d:60ms">
-        <span class="card__icon">
-          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none"><rect x="2.5" y="4" width="19" height="16" rx="2.5" stroke="#0E9C7A" stroke-width="1.8"/><rect x="11.5" y="11" width="7.5" height="6.5" rx="1.5" stroke="#0E9C7A" stroke-width="1.8"/></svg>
+        <span class="card__icon card__icon--muted">
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none"><path d="M4 9h13l-4-4" stroke="#78808F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 15H7l4 4" stroke="#78808F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </span>
-        <h3 class="card__title">画中画悬浮字幕</h3>
-        <p class="card__desc">字幕以悬浮窗形式贴在屏幕任意位置，大小、透明度、行数都可调，看课件和共享屏幕都不挡内容。</p>
+        <span class="card__badge card__badge--soon">开发中</span>
+        <h3 class="card__title">实时翻译</h3>
+        <p class="card__desc">把识别出的文字即时译成目标语言，做双语字幕。需要接入翻译服务，正在排期。</p>
       </article>
 
       <article class="card card--feature" data-reveal style="--d:120ms">
-        <span class="card__icon">
-          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none"><circle cx="6" cy="12" r="2.8" stroke="#0E9C7A" stroke-width="1.8"/><circle cx="18" cy="6" r="2.8" stroke="#0E9C7A" stroke-width="1.8"/><circle cx="18" cy="18" r="2.8" stroke="#0E9C7A" stroke-width="1.8"/><path d="M8.6 10.6l6.9-3.2M8.6 13.4l6.9 3.2" stroke="#0E9C7A" stroke-width="1.8"/></svg>
+        <span class="card__icon card__icon--muted">
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none"><path d="M6 3.5h8l4 4v13H6z" stroke="#78808F" stroke-width="1.8" stroke-linejoin="round"/><path d="M14 3.5v4h4" stroke="#78808F" stroke-width="1.8" stroke-linejoin="round"/><path d="M9.5 12.5h5M9.5 16h3" stroke="#78808F" stroke-width="1.8" stroke-linecap="round"/></svg>
         </span>
-        <h3 class="card__title">会议软件适配</h3>
-        <p class="card__desc">独立应用收听系统声音，直接配合 Zoom、Teams、Google Meet 使用。无需插件、无需机器人、无需对方安装。</p>
+        <span class="card__badge card__badge--soon">开发中</span>
+        <h3 class="card__title">AI 会议纪要</h3>
+        <p class="card__desc">在转写稿基础上自动提炼关键结论、待办事项与分歧点。需要大模型参与，正在排期。</p>
       </article>
     </div>
   </div>
@@ -218,25 +214,25 @@
   <div class="container">
     <div class="sec-head sec-head--center" data-reveal>
       <p class="eyebrow">简单三步</p>
-      <h2 class="h2">从下载到开口翻译，只要三分钟</h2>
-      <p class="lead">不用部署，不用对方配合，也不用改掉你现在的开会习惯。</p>
+      <h2 class="h2">从按下录音到拿到文稿</h2>
+      <p class="lead">不用装软件，不用注册账号，也不用等审核。</p>
     </div>
 
     <ol class="steps">
       <li class="step" data-reveal style="--d:0ms">
         <span class="step__num">01</span>
-        <h3 class="step__title">下载并登录</h3>
-        <p class="step__desc">支持 Windows、macOS、iOS、Android 与 Web 端。同一个账号多设备云端同步，试用额度直接到账。</p>
+        <h3 class="step__title">允许麦克风</h3>
+        <p class="step__desc">打开工具页点「开始录音」，浏览器会弹一次麦克风授权，点允许即可。音频不会上传到我们的服务器。</p>
       </li>
       <li class="step" data-reveal style="--d:80ms">
         <span class="step__num">02</span>
-        <h3 class="step__title">照常开你的会</h3>
-        <p class="step__desc">在 Zoom、Teams 或 Google Meet 里正常开会，Lingora 在旁边收听系统声音，无需插件、无需机器人。</p>
+        <h3 class="step__title">开口说话</h3>
+        <p class="step__desc">文字跟着你的语速往外冒，中间可以随时暂停、继续。也可以录完之后再让本地模型重新转写一遍。</p>
       </li>
       <li class="step" data-reveal style="--d:160ms">
         <span class="step__num">03</span>
-        <h3 class="step__title">开口，字幕就来</h3>
-        <p class="step__desc">自动识别语种并双向互译，双语字幕与 AI 语音播报同时就位。会后直接拿到双语纪要。</p>
+        <h3 class="step__title">导出文稿</h3>
+        <p class="step__desc">在结果区直接改错别字，然后复制全文，或导出成 TXT、SRT、VTT 三种格式带走。</p>
       </li>
     </ol>
   </div>
@@ -247,235 +243,183 @@
   <div class="container">
     <div class="sec-head" data-reveal>
       <p class="eyebrow eyebrow--dark">适用场景</p>
-      <h2 class="h2">总有一个场景，正好卡在你这里</h2>
-      <p class="lead">开会、上课、谈客户——语言不该是你发挥实力的门槛。</p>
+      <h2 class="h2">凡是需要「把话记下来」的场合</h2>
+      <p class="lead">不用逐字打字，也不用来回拖进度条听第二遍。</p>
     </div>
 
     <div class="grid grid--3">
       <article class="card card--scene" data-reveal style="--d:0ms">
-        <h3 class="card__title">跨国企业会议</h3>
+        <h3 class="card__title">会议记录</h3>
         <p class="pain">
           <svg viewBox="0 0 16 16" aria-hidden="true" fill="none"><circle cx="8" cy="8" r="7" stroke="#D2533A" stroke-width="1.5"/><path d="M5.8 5.8l4.4 4.4M10.2 5.8l-4.4 4.4" stroke="#D2533A" stroke-width="1.5" stroke-linecap="round"/></svg>
-          <span>多语言团队沟通效率低，会后纪要整理又费时</span>
+          <span>一边听一边记，手跟不上嘴，事后复盘只能靠回忆</span>
         </p>
         <p class="gain">
           <svg viewBox="0 0 16 16" aria-hidden="true" fill="none"><circle cx="8" cy="8" r="7" stroke="#0E9C7A" stroke-width="1.5"/><path d="M5 8.3l2.2 2.2L11 6.3" stroke="#0E9C7A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span>实时同传，加会后自动产出的双语纪要</span>
+          <span>会开完，一份完整文字稿也就有了</span>
         </p>
       </article>
 
       <article class="card card--scene" data-reveal style="--d:80ms">
-        <h3 class="card__title">国际讲座与留学</h3>
+        <h3 class="card__title">网课与讲座</h3>
         <p class="pain">
           <svg viewBox="0 0 16 16" aria-hidden="true" fill="none"><circle cx="8" cy="8" r="7" stroke="#D2533A" stroke-width="1.5"/><path d="M5.8 5.8l4.4 4.4M10.2 5.8l-4.4 4.4" stroke="#D2533A" stroke-width="1.5" stroke-linecap="round"/></svg>
-          <span>全英文授课跟不上节奏，一节课听漏一半</span>
+          <span>信息密度太大，走神一分钟就接不上了</span>
         </p>
         <p class="gain">
           <svg viewBox="0 0 16 16" aria-hidden="true" fill="none"><circle cx="8" cy="8" r="7" stroke="#0E9C7A" stroke-width="1.5"/><path d="M5 8.3l2.2 2.2L11 6.3" stroke="#0E9C7A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span>画中画悬浮字幕，配全程文字留存可回看</span>
+          <span>边听边出字，课后还能全文回看</span>
         </p>
       </article>
 
       <article class="card card--scene" data-reveal style="--d:160ms">
-        <h3 class="card__title">海外商务洽谈</h3>
+        <h3 class="card__title">采访与口述</h3>
         <p class="pain">
           <svg viewBox="0 0 16 16" aria-hidden="true" fill="none"><circle cx="8" cy="8" r="7" stroke="#D2533A" stroke-width="1.5"/><path d="M5.8 5.8l4.4 4.4M10.2 5.8l-4.4 4.4" stroke="#D2533A" stroke-width="1.5" stroke-linecap="round"/></svg>
-          <span>和海外客户沟通不畅，报价与条款容易谈歪</span>
+          <span>一小时录音要花三小时整理，成本全压在人工上</span>
         </p>
         <p class="gain">
           <svg viewBox="0 0 16 16" aria-hidden="true" fill="none"><circle cx="8" cy="8" r="7" stroke="#0E9C7A" stroke-width="1.5"/><path d="M5 8.3l2.2 2.2L11 6.3" stroke="#0E9C7A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span>60+ 语言实时互译，配 AI 语音播报更自然</span>
+          <span>录音转文字，几分钟拿到可编辑的稿子</span>
         </p>
       </article>
     </div>
   </div>
 </section>
 
-<!-- ============ 平台集成 ============ -->
+<!-- ============ 配合软件 ============ -->
 <section class="section section--white" id="integrations">
   <div class="container">
     <div class="sec-head sec-head--center" data-reveal>
-      <p class="eyebrow eyebrow--dark">无缝集成</p>
-      <h2 class="h2">与你正在用的会议平台，无缝协作</h2>
-      <p class="lead">不改变任何人的工作流程，也不需要对方装任何东西。</p>
+      <p class="eyebrow eyebrow--dark">配合使用</p>
+      <h2 class="h2">你手头的任何一个放声音的软件</h2>
+      <p class="lead">Lingora 是一条网页通道，不挑平台。把麦克风对着音箱，或者用系统内录把声音送进来，就能转写。</p>
     </div>
 
-    <div class="platforms">
-      <div class="platform" data-reveal style="--d:0ms">
-        <span class="platform__glyph">
-          <svg viewBox="0 0 40 40" aria-hidden="true"><rect x="3" y="10" width="21" height="20" rx="5.5" fill="#0E9C7A"/><path d="M26 17.5l9.5-5.5v16l-9.5-5.5z" fill="#0E9C7A" opacity=".45"/></svg>
-        </span>
-        <h3 class="platform__name">Zoom</h3>
-        <p class="platform__desc">在线会议与网络研讨会</p>
-      </div>
-
-      <div class="platform" data-reveal style="--d:60ms">
-        <span class="platform__glyph">
-          <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="27" cy="12" r="5" fill="#E0603F" opacity=".45"/><circle cx="14" cy="14" r="6.5" fill="#E0603F"/><path d="M3 33c0-6.1 4.9-11 11-11s11 4.9 11 11z" fill="#E0603F"/><path d="M27 22c5 0 9 3.6 9 8.5h-9z" fill="#E0603F" opacity=".45"/></svg>
-        </span>
-        <h3 class="platform__name">Microsoft Teams</h3>
-        <p class="platform__desc">企业协作与团队会议</p>
-      </div>
-
-      <div class="platform" data-reveal style="--d:120ms">
-        <span class="platform__glyph">
-          <svg viewBox="0 0 40 40" aria-hidden="true" fill="none"><rect x="3" y="8" width="34" height="24" rx="6" stroke="#0B1220" stroke-width="2.6"/><path d="M14 8v24" stroke="#0B1220" stroke-width="2.6"/><path d="M3 20h11" stroke="#0E9C7A" stroke-width="2.6" stroke-linecap="round"/></svg>
-        </span>
-        <h3 class="platform__name">Google Meet</h3>
-        <p class="platform__desc">浏览器里就能开的会</p>
-      </div>
-
-      <div class="platform" data-reveal style="--d:180ms">
-        <span class="platform__glyph">
-          <svg viewBox="0 0 40 40" aria-hidden="true" fill="none"><path d="M20 5C11.7 5 5 11.7 5 20c0 2.7.7 5.2 2 7.4L5 35l7.8-2c2.1 1.2 4.6 1.9 7.2 1.9C28.3 34.9 35 28.2 35 20S28.3 5 20 5z" stroke="#0E9C7A" stroke-width="2.6"/><path d="M15 17c1.5 4 4.5 6.5 8.5 7.5l1.5-2.5-3-1.5-1.5 1c-1-.6-1.8-1.4-2.4-2.5l1-1.5-1.5-3z" fill="#0E9C7A"/></svg>
-        </span>
-        <h3 class="platform__name">WhatsApp 通话</h3>
-        <p class="platform__desc">语音与视频通话</p>
-      </div>
+    <div class="softlist" data-reveal>
+      <span>Zoom</span>
+      <span>Microsoft Teams</span>
+      <span>Google Meet</span>
+      <span>腾讯会议</span>
+      <span>飞书</span>
+      <span>钉钉</span>
+      <span>播客与音频播放器</span>
+      <span>浏览器里的任意视频</span>
     </div>
 
     <div class="note-bar" data-reveal>
       <svg viewBox="0 0 18 18" aria-hidden="true"><path d="M4 3.5v11l10-5.5z" fill="#12E1B0"/></svg>
-      <p>独立应用直接收听系统声音，自动区分发言人并翻译。不需要会议机器人，不需要浏览器扩展，也不需要对方安装任何东西。</p>
+      <p>上面这些名字只是举例说明「能配合什么场景」，全部为各自所有者的商标。Lingora 与它们之间没有任何隶属或合作关系；出于隐私考虑，本工具也不会去读取这些软件的会议内容。</p>
     </div>
   </div>
 </section>
 
-<!-- ============ 用户评价与数据 ============ -->
+<!-- ============ 设计原则与数据 ============ -->
 <section class="section section--ink" id="proof">
   <div class="container">
     <div class="stats" data-reveal>
       <div class="stat">
-        <p class="stat__num" data-count="10000" data-suffix="+">10,000+</p>
-        <p class="stat__label">全球团队正在使用</p>
+        <p class="stat__num" data-count="99" data-suffix=" 种">99 种</p>
+        <p class="stat__label">本地模型可识别语言</p>
       </div>
       <div class="stat">
-        <p class="stat__num" data-count="60" data-suffix="+">60+</p>
-        <p class="stat__label">支持互译的语言</p>
+        <p class="stat__num" data-count="0" data-suffix=" 字节">0 字节</p>
+        <p class="stat__label">本地模式下上传的音频</p>
       </div>
       <div class="stat">
-        <p class="stat__num" data-count="1" data-prefix="&lt; " data-suffix="s">&lt; 1s</p>
-        <p class="stat__label">端到端同传延迟</p>
+        <p class="stat__num" data-count="3" data-suffix=" 种">3 种</p>
+        <p class="stat__label">可导出的文件格式</p>
       </div>
       <div class="stat">
-        <p class="stat__num" data-count="4.1" data-decimals="1">4.1</p>
-        <p class="stat__label">应用商店用户评分</p>
+        <p class="stat__num" data-count="0" data-prefix="¥">¥0</p>
+        <p class="stat__label">使用成本 · 不限时长</p>
       </div>
     </div>
 
     <div class="sec-head" data-reveal>
-      <p class="eyebrow">用户评价</p>
-      <h2 class="h2">听听他们，怎么说</h2>
+      <p class="eyebrow">为什么这么做</p>
+      <h2 class="h2">三件我们不肯让步的事</h2>
     </div>
 
     <div class="grid grid--3">
-      <figure class="card card--quote" data-reveal style="--d:0ms">
-        <svg class="stars stars--sm" viewBox="0 0 108 20" aria-label="5 星评分" role="img"><g fill="#12E1B0"><path d="M10 1.5l2.47 5.28 5.53.72-4.08 3.87 1.06 5.63L10 14.4l-4.98 2.6 1.06-5.63L2 7.5l5.53-.72z"/><path d="M32 1.5l2.47 5.28 5.53.72-4.08 3.87 1.06 5.63L32 14.4l-4.98 2.6 1.06-5.63L24 7.5l5.53-.72z"/><path d="M54 1.5l2.47 5.28 5.53.72-4.08 3.87 1.06 5.63L54 14.4l-4.98 2.6 1.06-5.63L46 7.5l5.53-.72z"/><path d="M76 1.5l2.47 5.28 5.53.72-4.08 3.87 1.06 5.63L76 14.4l-4.98 2.6 1.06-5.63L68 7.5l5.53-.72z"/><path d="M98 1.5l2.47 5.28 5.53.72-4.08 3.87 1.06 5.63L98 14.4l-4.98 2.6 1.06-5.63L90 7.5l5.53-.72z"/></g></svg>
-        <blockquote>跨国团队的会终于不用两个翻译轮着上了。实时同传的准确率超出预期，会后纪要自动生成，光整理纪要这一项每周就省出半天。</blockquote>
-        <figcaption>
-          <span class="avatar">张</span>
-          <span>张先生 · 跨国企业研发总监</span>
-        </figcaption>
-      </figure>
+      <article class="card card--quote" data-reveal style="--d:0ms">
+        <h3 class="card__title">音频不该离开你的设备</h3>
+        <blockquote>本地模型模式下，录音数据在你的浏览器里解码和推理，我们这边没有服务器接收它，也就谈不上保存或拿来训练。</blockquote>
+      </article>
 
-      <figure class="card card--quote" data-reveal style="--d:80ms">
-        <svg class="stars stars--sm" viewBox="0 0 108 20" aria-label="5 星评分" role="img"><g fill="#12E1B0"><path d="M10 1.5l2.47 5.28 5.53.72-4.08 3.87 1.06 5.63L10 14.4l-4.98 2.6 1.06-5.63L2 7.5l5.53-.72z"/><path d="M32 1.5l2.47 5.28 5.53.72-4.08 3.87 1.06 5.63L32 14.4l-4.98 2.6 1.06-5.63L24 7.5l5.53-.72z"/><path d="M54 1.5l2.47 5.28 5.53.72-4.08 3.87 1.06 5.63L54 14.4l-4.98 2.6 1.06-5.63L46 7.5l5.53-.72z"/><path d="M76 1.5l2.47 5.28 5.53.72-4.08 3.87 1.06 5.63L76 14.4l-4.98 2.6 1.06-5.63L68 7.5l5.53-.72z"/><path d="M98 1.5l2.47 5.28 5.53.72-4.08 3.87 1.06 5.63L98 14.4l-4.98 2.6 1.06-5.63L90 7.5l5.53-.72z"/></g></svg>
-        <blockquote>上课再也不用担心听不懂了。悬浮字幕是最实用的功能，写作业之前还能把整节课的文字记录回看一遍。</blockquote>
-        <figcaption>
-          <span class="avatar">李</span>
-          <span>李同学 · 计算机科学 在读</span>
-        </figcaption>
-      </figure>
+      <article class="card card--quote" data-reveal style="--d:80ms">
+        <h3 class="card__title">先让你用上，再谈别的</h3>
+        <blockquote>录音、识别、导出这些真正干活的部分全部免费，没有时长限制，也不需要留手机号。觉得不好用，直接关掉页面就行。</blockquote>
+      </article>
 
-      <figure class="card card--quote" data-reveal style="--d:160ms">
-        <svg class="stars stars--sm" viewBox="0 0 108 20" aria-label="5 星评分" role="img"><g fill="#12E1B0"><path d="M10 1.5l2.47 5.28 5.53.72-4.08 3.87 1.06 5.63L10 14.4l-4.98 2.6 1.06-5.63L2 7.5l5.53-.72z"/><path d="M32 1.5l2.47 5.28 5.53.72-4.08 3.87 1.06 5.63L32 14.4l-4.98 2.6 1.06-5.63L24 7.5l5.53-.72z"/><path d="M54 1.5l2.47 5.28 5.53.72-4.08 3.87 1.06 5.63L54 14.4l-4.98 2.6 1.06-5.63L46 7.5l5.53-.72z"/><path d="M76 1.5l2.47 5.28 5.53.72-4.08 3.87 1.06 5.63L76 14.4l-4.98 2.6 1.06-5.63L68 7.5l5.53-.72z"/><path d="M98 1.5l2.47 5.28 5.53.72-4.08 3.87 1.06 5.63L98 14.4l-4.98 2.6 1.06-5.63L90 7.5l5.53-.72z"/></g></svg>
-        <blockquote>和海外客户沟通变得前所未有的顺畅。语音播报让对话更像正常聊天，客户基本感觉不到中间隔着一次翻译。</blockquote>
-        <figcaption>
-          <span class="avatar">王</span>
-          <span>王女士 · 跨境电商外贸经理</span>
-        </figcaption>
-      </figure>
+      <article class="card card--quote" data-reveal style="--d:160ms">
+        <h3 class="card__title">不把没做完的东西说成做完了</h3>
+        <blockquote>实时翻译和会议纪要都还在开发中，页面上就如实标着「开发中」。什么时候能用了，什么时候才换成「可用」。</blockquote>
+      </article>
     </div>
   </div>
 </section>
 
-<!-- ============ 价格方案 ============ -->
+<!-- ============ 版本计划 ============ -->
 <section class="section section--paper" id="pricing">
   <div class="container">
     <div class="sec-head sec-head--split" data-reveal>
       <div class="sec-head__left">
-        <p class="eyebrow eyebrow--dark">价格方案</p>
-        <h2 class="h2">灵活选择，适合你的计划</h2>
-        <p class="lead">从免费试用到长期年卡，总有一款对得上你的用量。</p>
+        <p class="eyebrow eyebrow--dark">版本计划</p>
+        <h2 class="h2">现在免费，以后也免费</h2>
+        <p class="lead">网页版不需要付费，也没有隐藏的额度。下面这两条线是后续的打算，还没上线。</p>
       </div>
-      <p class="sec-head__note">所有付费方案支持 30 天无理由退款 · 订阅可随时取消</p>
+      <p class="sec-head__note">无账号体系 · 无自动续费</p>
     </div>
 
-    <div class="currency" data-reveal role="group" aria-label="切换计价货币">
-      <button type="button" class="is-active" data-currency="cny" aria-pressed="true">¥ 人民币</button>
-      <button type="button" data-currency="usd" aria-pressed="false">$ 美元</button>
-    </div>
-
-    <div class="plans">
-      <article class="plan" data-reveal style="--d:0ms">
-        <h3 class="plan__name">免费体验</h3>
-        <p class="plan__price"><span class="plan__amount" data-cny="¥0" data-usd="$0">¥0</span></p>
-        <p class="plan__desc">初次体验，无风险试用</p>
+    <div class="plans plans--3">
+      <article class="plan plan--featured" data-reveal style="--d:0ms">
+        <div class="plan__top">
+          <h3 class="plan__name">网页版</h3>
+          <span class="plan__badge">现在可用</span>
+        </div>
+        <p class="plan__price"><span class="plan__amount">¥0</span><span class="plan__unit">/ 永久</span></p>
+        <p class="plan__desc">打开浏览器就能用，无需安装</p>
         <ul class="plan__list">
-          <li>有限时长免费试用</li>
-          <li>基础翻译功能</li>
-          <li>支持 60+ 语言</li>
+          <li>在线录音，不限时长</li>
+          <li>实时语音识别，支持 99 种语言</li>
+          <li>本地 Whisper 模型离线转写</li>
+          <li>导出 TXT / SRT / VTT</li>
+          <li>无需注册，音频不上传</li>
         </ul>
-        <a class="btn btn--outline btn--block" href="#cta">开始试用</a>
+        <a class="btn btn--mint btn--block" href="app.html">立即在线使用</a>
       </article>
 
       <article class="plan" data-reveal style="--d:70ms">
-        <h3 class="plan__name">月卡</h3>
-        <p class="plan__price">
-          <span class="plan__amount" data-cny="¥399" data-usd="$55">¥399</span>
-          <span class="plan__unit" data-cny="/ 月" data-usd="/ mo">/ 月</span>
-        </p>
-        <p class="plan__desc">短期使用，灵活方便</p>
-        <ul class="plan__list">
-          <li>无限翻译次数</li>
-          <li>全部功能解锁</li>
-          <li>优先技术支持</li>
-        </ul>
-        <a class="btn btn--ink btn--block" href="#cta">立即订阅</a>
-      </article>
-
-      <article class="plan plan--featured" data-reveal style="--d:140ms">
         <div class="plan__top">
-          <h3 class="plan__name">年卡</h3>
-          <span class="plan__badge">最受欢迎</span>
+          <h3 class="plan__name">桌面版</h3>
+          <span class="plan__badge plan__badge--soon">开发中</span>
         </div>
-        <p class="plan__price">
-          <span class="plan__amount" data-cny="¥4,999" data-usd="$699">¥4,999</span>
-          <span class="plan__unit" data-cny="/ 年" data-usd="/ yr">/ 年</span>
-        </p>
-        <p class="plan__desc">长期使用，性价比最高</p>
+        <p class="plan__price"><span class="plan__amount plan__amount--text">待定</span></p>
+        <p class="plan__desc">给需要长期使用的人</p>
         <ul class="plan__list">
-          <li>无限翻译次数</li>
-          <li>全部功能解锁</li>
-          <li>优先技术支持</li>
-          <li>专属客户经理</li>
+          <li>直接捕获系统声音</li>
+          <li>全局快捷键开始 / 停止</li>
+          <li>模型本地常驻，启动即用</li>
+          <li>自动更新</li>
         </ul>
-        <a class="btn btn--mint btn--block" href="#cta">选择年卡</a>
+        <a class="btn btn--outline btn--block" href="#faq">了解进展</a>
       </article>
 
-      <article class="plan" data-reveal style="--d:210ms">
-        <h3 class="plan__name">小时卡</h3>
-        <p class="plan__price">
-          <span class="plan__amount" data-cny="¥5" data-usd="$0.7">¥5</span>
-          <span class="plan__unit" data-cny="/ 小时起" data-usd="/ hr">/ 小时起</span>
-        </p>
-        <p class="plan__desc">灵活使用，按小时付费</p>
+      <article class="plan" data-reveal style="--d:140ms">
+        <div class="plan__top">
+          <h3 class="plan__name">云端增强版</h3>
+          <span class="plan__badge plan__badge--soon">开发中</span>
+        </div>
+        <p class="plan__price"><span class="plan__amount plan__amount--text">待定</span></p>
+        <p class="plan__desc">给需要更高精度和翻译的人</p>
         <ul class="plan__list">
-          <li>10 / 30 / 100 小时可选</li>
-          <li>全部功能解锁</li>
-          <li>无有效期限制</li>
+          <li>实时翻译与双语字幕</li>
+          <li>AI 会议纪要与待办提炼</li>
+          <li>更高精度的云端识别模型</li>
+          <li>自定义术语库</li>
         </ul>
-        <a class="btn btn--outline btn--block" href="#cta">查看详情</a>
+        <a class="btn btn--outline btn--block" href="#faq">了解进展</a>
       </article>
     </div>
   </div>
@@ -487,77 +431,77 @@
     <div class="faq__aside" data-reveal>
       <p class="eyebrow eyebrow--dark">常见问题</p>
       <h2 class="h2 h2--sm">你可能还想知道</h2>
-      <p class="lead">关于 Lingora，这里是你最关心的几个答案。还有别的疑问，随时找我们。</p>
+      <p class="lead">关于 Lingora，这里是你最关心的几个答案。</p>
     </div>
 
     <div class="faq__list" id="faqList" data-reveal>
       <div class="acc is-open">
         <button class="acc__q" type="button" aria-expanded="true">
-          <span>Lingora 支持哪些语言？</span>
+          <span>支持哪些语言？</span>
           <span class="acc__ico" aria-hidden="true"></span>
         </button>
         <div class="acc__a"><div class="acc__inner">
-          <p>支持 60+ 种语言，覆盖中文、英语、日语、韩语、粤语、德语、法语、俄语、意大利语、西班牙语、葡萄牙语等，能覆盖全球 90% 以上的实际沟通场景。语种自动识别，中途换人换语言也不用重新配置。</p>
+          <p>本地 Whisper 模型覆盖 99 种语言，中文、英语、日语、粤语、德语、法语、西班牙语等实测效果较好。语种可以手动指定，也可以交给模型自动判断——指定语种会更准、更快。</p>
         </div></div>
       </div>
 
       <div class="acc">
         <button class="acc__q" type="button" aria-expanded="false">
-          <span>翻译延迟有多低？</span>
+          <span>我的录音会上传到服务器吗？</span>
           <span class="acc__ico" aria-hidden="true"></span>
         </button>
         <div class="acc__a"><div class="acc__inner">
-          <p>端到端语音模型一次推理直接出结果，省掉了「识别—翻译—合成」多段管线累积的等待。实测端到端延迟通常在 1 秒以内，双向对话的节奏基本不受影响。</p>
+          <p>分两种情况，说清楚比较好：用<strong>本地模型</strong>转写时，音频只在你的浏览器里解码和推理，不会离开你的设备，我们这边没有任何接收端点。用<strong>浏览器原生识别</strong>时，音频由你所用的浏览器厂商的语音服务处理（Chrome 走 Google、Edge 走 Microsoft），这与浏览器本身有关，我们不经手也不保存。在意隐私就选本地模型。</p>
         </div></div>
       </div>
 
       <div class="acc">
         <button class="acc__q" type="button" aria-expanded="false">
-          <span>我的语音数据安全吗？</span>
+          <span>需要注册或者付费吗？</span>
           <span class="acc__ico" aria-hidden="true"></span>
         </button>
         <div class="acc__a"><div class="acc__inner">
-          <p>GDPR 与 HIPAA 合规，传输采用 TLS 1.3、存储采用 AES-128 加密，音频实时处理完成后即刻删除，不留存原始录音，你的数据也不会被用于训练模型。</p>
+          <p>都不需要。网页版没有账号系统，没有时长限制，也没有需要绑卡的试用额度。打开页面就能开始录。</p>
         </div></div>
       </div>
 
       <div class="acc">
         <button class="acc__q" type="button" aria-expanded="false">
-          <span>有免费试用吗？</span>
+          <span>识别准确率怎么样？</span>
           <span class="acc__ico" aria-hidden="true"></span>
         </button>
         <div class="acc__a"><div class="acc__inner">
-          <p>注册即送 40 分钟免费试用时长，不用绑卡、不用预约演示。功能上给到完整的实时同传、双语字幕与会议纪要，可以拿一场真实的会跑一遍再决定。</p>
+          <p>安静的室内、发音清晰、单人说话时效果最好。多人抢话、环境噪声大或者口音较重时准确率会下降，建议靠近麦克风、减少背景杂音。另外要说明：本地小模型的速度和精度都低于云端大模型，如果对准确率要求高，可以在设置里切换到更大的模型，代价是处理更慢、首次加载更久。</p>
         </div></div>
       </div>
 
       <div class="acc">
         <button class="acc__q" type="button" aria-expanded="false">
-          <span>支持哪些平台？</span>
+          <span>能导出成什么格式？</span>
           <span class="acc__ico" aria-hidden="true"></span>
         </button>
         <div class="acc__a"><div class="acc__inner">
-          <p>Windows、macOS、iOS、Android 与 Web 端全部支持，账号数据云端同步，一台设备开过的会，换台设备也能接着看记录。</p>
+          <p>TXT 纯文本、SRT 字幕、VTT 字幕，另外也可以一键复制全文。字幕的时间戳按录音起止时间自动对齐，可以直接导入剪辑软件或视频平台。</p>
         </div></div>
       </div>
 
       <div class="acc">
         <button class="acc__q" type="button" aria-expanded="false">
-          <span>怎么配合会议软件使用？</span>
+          <span>有桌面版吗？为什么不直接给下载？</span>
           <span class="acc__ico" aria-hidden="true"></span>
         </button>
         <div class="acc__a"><div class="acc__inner">
-          <p>不用改工作流。你照常在 Zoom、Teams 或 Google Meet 里开会，Lingora 作为独立应用收听系统声音并自动区分发言人，不装插件、不加机器人，对方的会议体验完全不变。</p>
+          <p>桌面版还在开发中，所以不放到首页让你先下载。桌面版想做的是浏览器做不到的事：直接捕获系统声音，这样在线会议、网课、视频里的声音也能转写，不用外放给麦克风听。先用网页版试试顺不顺手，觉得合适再考虑装。</p>
         </div></div>
       </div>
 
       <div class="acc">
         <button class="acc__q" type="button" aria-expanded="false">
-          <span>AI 会议纪要到底是什么？</span>
+          <span>处理时长有限制吗？</span>
           <span class="acc__ico" aria-hidden="true"></span>
         </button>
         <div class="acc__a"><div class="acc__inner">
-          <p>会后自动产出的一份双语记录，包含关键决策、双方确认的条款、待办行动项和分歧点。你可以预先设置行业术语、人名和产品型号，让专有名词在纪要里保持正确。</p>
+          <p>没有时长限制，但本地模型处理长录音需要时间，大致和音频长度成正比，具体快慢取决于你的电脑。建议单段控制在 30 分钟以内，或者分成几段处理，中途断了也不至于全部重来。</p>
         </div></div>
       </div>
     </div>
@@ -569,13 +513,13 @@
   <div class="container">
     <div class="cta__inner" data-reveal>
       <p class="eyebrow">现在开始</p>
-      <h2 class="cta__title">让每一次跨语言沟通，都畅通无阻</h2>
-      <p class="cta__sub">下载 Lingora，把语言从会议流程里彻底拿掉。注册即送 40 分钟免费试用时长，不用绑卡。</p>
+      <h2 class="cta__title">现在就能开始，不用下载任何东西</h2>
+      <p class="cta__sub">打开工具页、允许麦克风、开口说话——文字自己就出来了。免费、不限时长、无需注册。用顺手了再考虑桌面版。</p>
       <div class="cta__btns">
-        <a class="btn btn--mint btn--lg" href="#top">免费下载 Lingora</a>
-        <a class="btn btn--ghost btn--lg" href="#pricing">查看价格方案</a>
+        <a class="btn btn--mint btn--lg" href="app.html">立即在线使用</a>
+        <a class="btn btn--ghost btn--lg" href="#pricing">看看后续计划</a>
       </div>
-      <p class="cta__trust">支持 Windows / macOS / iOS / Android / Web　　30 天无理由退款　　音频实时删除不留存</p>
+      <p class="cta__trust">无需注册　　不限时长　　本地处理不上传　　可导出 TXT / SRT / VTT</p>
     </div>
   </div>
 </section>
@@ -595,37 +539,34 @@
           </svg>
           <span class="brand__name">Lingora</span>
         </div>
-        <p>近乎零延迟的 AI 实时同声传译与会议助理。支持 60+ 语言互译、双屏双语字幕与 AI 会议纪要，覆盖 Windows / macOS / iOS / Android / Web。</p>
+        <p>打开网页就能用的语音转写工具。在线录音、实时识别、导出 TXT / SRT / VTT。音频在浏览器内处理，不上传服务器。</p>
       </div>
 
       <nav class="footer__cols" aria-label="页脚导航">
         <div class="footer__col">
           <h4>产品</h4>
+          <a href="app.html">在线使用</a>
           <a href="#features">功能总览</a>
-          <a href="#integrations">平台集成</a>
-          <a href="#pricing">价格方案</a>
-          <a href="#cta">下载中心</a>
+          <a href="#pricing">版本计划</a>
         </div>
         <div class="footer__col">
-          <h4>公司</h4>
-          <a href="#top">关于我们</a>
-          <a href="#proof">最新资讯</a>
-          <a href="#integrations">合作伙伴</a>
-          <a href="#cta">加入我们</a>
+          <h4>了解</h4>
+          <a href="#scenes">适用场景</a>
+          <a href="#integrations">配合软件</a>
+          <a href="#faq">常见问题</a>
         </div>
         <div class="footer__col">
-          <h4>法律与支持</h4>
-          <a href="#faq">隐私政策</a>
-          <a href="#faq">服务条款</a>
-          <a href="#integrations">合规与安全</a>
+          <h4>隐私</h4>
+          <a href="#faq">音频如何处理</a>
+          <a href="#proof">设计原则</a>
           <a href="#faq">帮助中心</a>
         </div>
       </nav>
     </div>
 
     <div class="footer__bottom">
-      <p>Copyright 2026 Lingora 灵语同传　保留所有权利</p>
-      <p>品牌、文案与视觉均为原创设计，站点仅用于设计演示</p>
+      <p>Copyright 2026 Lingora　保留所有权利</p>
+      <p>品牌、文案与视觉均为原创设计，站点用于功能演示</p>
     </div>
   </div>
   <p class="footer__wordmark" aria-hidden="true">Lingora</p>
