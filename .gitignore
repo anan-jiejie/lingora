@@ -1,0 +1,12 @@
+# 视觉回归脚本与截图（非站点资源，不需要部署）
+.verify/
+
+# 系统杂物
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 编辑器
+.vscode/
+.idea/
+*.log
