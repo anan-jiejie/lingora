@@ -171,3 +171,105 @@ curl -s -H "Authorization: Bearer $PAT" \
 
 另外 `.gitattributes` 里的 `assets/vendor/** -text -diff` 不能少——
 本机 `core.autocrlf=true` 会把模型和 tokenizer 的换行符改掉，造成内容漂移。
+
+## 动画层（GSAP）
+
+落地页的动效由 `assets/motion.js` + `assets/motion.css` 承担，
+运行时是自托管在 `assets/vendor/gsap/` 的 **GSAP 3.15.0**（核心 + ScrollTrigger + CustomEase，约 122 KB，**不走 CDN**）。
+
+### 为什么用 GSAP
+
+站点原有的动画是 CSS transition + IntersectionObserver：
+`[data-reveal]` 加个 `.is-visible` 类就淡入。够用，但有几个够不着的地方：
+
+- 首屏想要一条**多段编排**的亮相（顺序、重叠、错峰），CSS 只能靠手写 `transition-delay`
+- 滚动叙事需要把动画进度**绑定到滚动位置**（scrub），IntersectionObserver 只能给「进来了 / 出去了」
+- 用户中途反向滚动时，CSS 动画没法优雅回退
+- `prefers-reduced-motion` 需要逐条分支，GSAP 的 `matchMedia` 一次搞定
+
+### 三层降级（关键设计）
+
+动画是**增强**，不是**依赖**。任一层断裂，页面都必须照常可用：
+
+| 情况 | 行为 | 判定位置 |
+|---|---|---|
+| 允许动效 + GSAP 就绪 | `motion.js` 全量接管 | `html.has-gsap` 被加上 |
+| 用户开启「减少动效」 | `motion.js` 直接 return；`main.js` 的 `reduced` 分支给终态 | `motion.js` 第二道守卫 |
+| GSAP 文件加载失败 | `motion.js` return；`main.js` 的 IntersectionObserver 兜底 | `main.js` 的 `gsapActive` |
+
+`motion.css` 里**所有规则都挂在 `html.has-gsap` 下**——GSAP 没起来时这份样式整体失效，
+不会出现「元素被 CSS 藏起来、JS 又没来放行」的白屏。
+
+### main.js 与 motion.js 的分工
+
+**`main.js` 做事，`motion.js` 只做动。**
+
+`main.js` 里的 `gsapActive` 开关让出两段逻辑：
+滚动揭示、数字计数。避免两套东西同时写 `opacity` 与 `transform`。
+
+被让出的两段**没有删掉**，仍然在 GSAP 缺席时生效。
+
+### 缓动对齐
+
+`motion.js` 用 `CustomEase` 复刻了 `styles.css` 的两条曲线：
+
+```js
+CustomEase.create('lingora-ease', '0.22, 0.61, 0.36, 1'); // = --ease
+CustomEase.create('lingora-out',  '0.16, 1, 0.3, 1');      // = --ease-out
+```
+
+这样 GSAP 的动画与既有 CSS 动画**手感完全一致**，不会出现「引了个新库就换一套节奏」。
+
+### 动画与各区块的对应关系
+
+| 区块 | 动效 |
+|---|---|
+| 全局 | 顶部 2px 滚动进度条（scrub，两端为品牌双色） |
+| 页头 `#nav` | 滚动毛玻璃（原有 CSS，未改动） |
+| 首屏 `.hero` | 一条 master timeline：徽章 → **标题逐行遮罩推出** → 副标题 → CTA → 信任行 ／ 演示窗从右侧带 3D 侧身入场 → 语言切换按钮 → 提示语 ／ 合规条 4 项错峰；光晕滚动视差 |
+| 功能 `#features` | 6 张卡 `ScrollTrigger.batch` 错峰上浮 + 卡片 3D 倾斜跟随指针 |
+| 三步 `#steps` | 3 张卡错峰入场 + 3D 倾斜 |
+| 场景 `#scenes` | 3 张卡错峰入场 + 3D 倾斜 |
+| 配合软件 `#integrations` | 8 个标签 `back.out` 逐个弹入 |
+| 设计原则 `#proof` | 4 组数据错峰入场，`99` / `3` 用补间滚动计数 |
+| 版本计划 `#pricing` | 3 张卡错峰入场；主推卡有呼吸光晕（GSAP 只推 `--lingora-halo` 一个数值，渐变由 CSS 画） |
+| 常见问题 `#faq` | 7 条问题**逐条**滑入；展开时内容段落再次错峰淡入 |
+| 结尾号召 `#cta` | 整块轻微放大落定 + 内部元素次第浮出 |
+| 页脚 | 巨型字标滚动视差 |
+| 返回顶部 | 点击时图标弹跳一次 |
+
+### 验证
+
+> 两个脚本放在 `.verify/`，按项目约定**不纳入版本控制**（见 `.gitignore`），
+> 属于本地回归工具而非站点资源。
+
+```bash
+# 本地（先起静态服务器）
+python -m http.server 8088 --bind 127.0.0.1
+NODE_PATH=<playwright-core 所在目录> node .verify/motion-test.js
+
+# 线上
+TARGET=https://anan-jiejie.github.io/lingora/index.html \
+  NODE_PATH=<playwright-core 所在目录> node .verify/motion-test.js
+```
+
+两个脚本的分工：
+
+- `motion-test.js` —— 三档视口（1440 / 1024 / 390）跑一遍，统计 `[data-reveal]` 可见数、
+  控制台错误、404、横向溢出；另跑一次 `reducedMotion: 'reduce'` 的 context 验证降级
+- `motion-trace.js` —— **逐帧采样**首屏标题位移、滚动前卡片不透明度、进度条 scaleX、
+  数字终值、3D 倾斜 matrix3d、光晕伪元素 opacity 序列、FAQ 阶梯值
+
+`motion-trace.js` 是为了区分「动画真的在播」与「元素只是碰巧可见」——
+只查最终 opacity 是看不出来的，必须抓到中间帧。
+
+### 升级 GSAP
+
+```bash
+npm pack gsap@<版本> --registry=https://registry.npmmirror.com
+tar -xzf gsap-<版本>.tgz
+cp package/dist/{gsap,ScrollTrigger,CustomEase}.min.js assets/vendor/gsap/
+```
+
+许可：GSAP 现为 Standard "no charge" license，核心与常用插件**免费含商用**，
+**无需 `.npmrc`、无需 auth token**。详见 `assets/vendor/gsap/README.md`。
