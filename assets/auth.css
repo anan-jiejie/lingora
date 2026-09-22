@@ -1,0 +1,713 @@
+/* ==========================================================================
+   Lingora · 账户页样式（登录 / 注册 / 找回密码）
+   文件：assets/auth.css
+   --------------------------------------------------------------------------
+   与落地页的关系
+   1) 变量全部沿用 styles.css 的 :root —— 颜色 / 圆角 / 缓动 / 栅格一套到底，
+      不新造第二套色板
+   2) 底色取落地页首屏的 --ink-1 深墨，卡片取白 —— 就是首屏「深底 + 亮面」
+      那组关系的延续，登录卡因此成为唯一的视觉焦点
+   3) 命名统一 auth- / authcard- 前缀，与 styles.css 零冲突
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. 页面骨架
+   -------------------------------------------------------------------------- */
+.auth-body {
+  background: var(--ink-1);
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.auth {
+  position: relative;
+  flex: 1;
+  padding-top: calc(var(--nav-h) + 48px);
+  padding-bottom: 90px;
+  overflow: hidden;
+}
+
+/* 与首屏 hero__glow 同一套双色光晕，只是把位置挪到卡片后方 */
+.auth__glow {
+  position: absolute;
+  inset: -24% -12% auto -12%;
+  height: 720px;
+  pointer-events: none;
+  background:
+    radial-gradient(46% 44% at 22% 38%, rgba(18, 225, 176, 0.15), transparent 70%),
+    radial-gradient(40% 40% at 80% 16%, rgba(255, 122, 92, 0.11), transparent 72%);
+  filter: blur(10px);
+}
+
+.auth__container { position: relative; }
+
+.auth__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 486px;
+  gap: 72px;
+  align-items: start;
+  padding-top: 26px;
+}
+
+/* --------------------------------------------------------------------------
+   2. 左侧品牌区
+   -------------------------------------------------------------------------- */
+.auth__aside {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  max-width: 560px;
+  padding-top: 26px;
+}
+
+.auth__title {
+  font-size: clamp(30px, 3.2vw, 46px);
+  line-height: 1.34;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--tx-hi);
+}
+
+.auth__lead {
+  font-size: 16px;
+  line-height: 1.85;
+  color: var(--tx-mid);
+  max-width: 500px;
+}
+
+.auth__points {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 6px;
+}
+.auth__points li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: var(--tx-mid);
+}
+.auth__points svg {
+  width: 19px;
+  height: 19px;
+  flex: none;
+  margin-top: 2px;
+}
+.auth__points strong {
+  color: var(--tx-hi);
+  font-weight: 600;
+}
+
+.auth__note {
+  margin-top: 8px;
+  padding: 16px 18px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--line-dark);
+  background: rgba(255, 255, 255, 0.02);
+  font-size: 13px;
+  line-height: 1.75;
+  color: var(--tx-low);
+}
+
+/* --------------------------------------------------------------------------
+   3. 登录卡
+   -------------------------------------------------------------------------- */
+.authcard {
+  background: var(--white);
+  color: var(--tx-on-light-hi);
+  border-radius: var(--r-xl);
+  padding: 26px 30px 30px;
+  box-shadow: 0 46px 90px -46px rgba(0, 0, 0, 0.9);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.authcard__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 12.5px;
+  color: #78808F;
+}
+
+.authcard__region {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.authcard__switch {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--lang-a-deep);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s var(--ease), color 0.2s var(--ease);
+}
+.authcard__switch:hover {
+  color: #0B7A5F;
+  border-bottom-color: currentColor;
+}
+
+.authcard__welcome {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: var(--tx-on-light-hi);
+}
+.authcard__welcome span {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--lang-a-deep);
+  margin-left: 4px;
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   4. 分段控件（手机登录 / 邮箱登录）
+   -------------------------------------------------------------------------- */
+.seg {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 4px;
+  padding: 4px;
+  border-radius: var(--r-pill);
+  background: #F0EFEB;
+}
+.seg button {
+  padding: 11px 14px;
+  border-radius: var(--r-pill);
+  font-size: 14px;
+  font-weight: 600;
+  color: #767E8B;
+  transition: background-color 0.25s var(--ease), color 0.25s var(--ease),
+    box-shadow 0.25s var(--ease);
+}
+.seg button:hover { color: var(--tx-on-light-hi); }
+.seg button[aria-selected='true'] {
+  background: var(--white);
+  color: var(--tx-on-light-hi);
+  box-shadow: 0 4px 14px -6px rgba(11, 18, 32, 0.28);
+}
+
+/* --------------------------------------------------------------------------
+   5. 表单字段
+   -------------------------------------------------------------------------- */
+.authform {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.field__label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #4C5563;
+}
+
+.field__row {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+}
+
+/* 国家码：与输入框咬合成一整块 */
+.field__cc {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 12px;
+  border-radius: var(--r-sm);
+  border: 1px solid #D9D3C8;
+  background: #FAF9F6;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--tx-on-light-hi);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: border-color 0.2s var(--ease), background-color 0.2s var(--ease);
+}
+.field__cc:hover { border-color: #BEB6A8; background: #F5F3EE; }
+.field__cc svg { width: 10px; height: 6px; flex: none; }
+
+.field__input {
+  flex: 1;
+  min-width: 0;
+  height: 50px;
+  padding: 0 14px;
+  border-radius: var(--r-sm);
+  border: 1px solid #D9D3C8;
+  background: var(--white);
+  font-size: 15px;
+  color: var(--tx-on-light-hi);
+  transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+.field__input::placeholder { color: #A7AEBA; }
+.field__input:hover { border-color: #BEB6A8; }
+.field__input:focus {
+  outline: none;
+  border-color: var(--lang-a-deep);
+  box-shadow: 0 0 0 3px rgba(14, 156, 122, 0.16);
+}
+
+/* 校验失败的字段 */
+.field.is-invalid .field__input,
+.field.is-invalid .field__cc {
+  border-color: #D2533A;
+}
+.field.is-invalid .field__input:focus {
+  box-shadow: 0 0 0 3px rgba(210, 83, 58, 0.16);
+}
+
+.field__err {
+  display: none;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: #C24A32;
+}
+.field.is-invalid .field__err { display: block; }
+
+/* 验证码行：输入框 + 获取按钮 */
+.field__row--code .field__input {
+  flex: 1;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.14em;
+}
+
+.codebtn {
+  flex: none;
+  padding: 0 18px;
+  height: 50px;
+  border-radius: var(--r-sm);
+  border: 1px solid rgba(14, 156, 122, 0.4);
+  background: #EAFBF5;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--lang-a-deep);
+  white-space: nowrap;
+  transition: background-color 0.2s var(--ease), border-color 0.2s var(--ease),
+    color 0.2s var(--ease);
+}
+.codebtn:hover:not(:disabled) { background: #DAF6EC; border-color: var(--lang-a-deep); }
+.codebtn:disabled {
+  background: #F0EFEB;
+  border-color: #E2DED5;
+  color: #9AA1AC;
+  cursor: not-allowed;
+  font-variant-numeric: tabular-nums;
+}
+
+/* --------------------------------------------------------------------------
+   6. 协议勾选
+   -------------------------------------------------------------------------- */
+.check {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: #5D6674;
+}
+.check input {
+  width: 17px;
+  height: 17px;
+  flex: none;
+  margin-top: 2px;
+  accent-color: var(--lang-a-deep);
+  cursor: pointer;
+}
+.check a {
+  color: var(--lang-a-deep);
+  font-weight: 600;
+  border-bottom: 1px solid rgba(14, 156, 122, 0.35);
+  transition: border-color 0.2s var(--ease);
+}
+.check a:hover { border-bottom-color: currentColor; }
+.check.is-invalid { color: #C24A32; }
+.check.is-invalid input { outline: 2px solid rgba(210, 83, 58, 0.4); outline-offset: 1px; }
+
+/* --------------------------------------------------------------------------
+   7. 主按钮与加载态
+   -------------------------------------------------------------------------- */
+.authsubmit {
+  width: 100%;
+  height: 52px;
+  border-radius: var(--r-pill);
+  background: var(--lang-a);
+  color: #04231B;
+  font-size: 15.5px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: background-color 0.25s var(--ease), box-shadow 0.25s var(--ease),
+    opacity 0.25s var(--ease);
+  box-shadow: 0 12px 30px -14px rgba(18, 225, 176, 0.6);
+}
+.authsubmit:hover:not(:disabled) {
+  background: #2BF0C4;
+  box-shadow: 0 18px 40px -16px rgba(18, 225, 176, 0.75);
+}
+.authsubmit:disabled { opacity: 0.62; cursor: not-allowed; box-shadow: none; }
+
+/* 转圈：只在加载态出现，用 conic 渐变描边比 border 更细腻 */
+.authsubmit__spin {
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  display: none;
+  background: conic-gradient(from 0deg, transparent 0 25%, currentColor 100%);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2.4px), #000 0);
+  mask: radial-gradient(farthest-side, transparent calc(100% - 2.4px), #000 0);
+  animation: authspin 0.75s linear infinite;
+}
+.authsubmit.is-loading .authsubmit__spin { display: block; }
+@keyframes authspin { to { transform: rotate(360deg); } }
+
+/* --------------------------------------------------------------------------
+   8. 分隔线 + 第三方登录
+   -------------------------------------------------------------------------- */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 12.5px;
+  color: #9AA1AC;
+}
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #E7E2D8;
+}
+
+.oauth {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.oauth button {
+  width: 100%;
+  height: 48px;
+  border-radius: var(--r-sm);
+  border: 1px solid #D9D3C8;
+  background: var(--white);
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--tx-on-light-hi);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: border-color 0.2s var(--ease), background-color 0.2s var(--ease);
+}
+.oauth button:hover { border-color: #BEB6A8; background: #FCFBF8; }
+.oauth svg { width: 18px; height: 18px; flex: none; }
+
+/* --------------------------------------------------------------------------
+   9. 推荐码入口
+   -------------------------------------------------------------------------- */
+.referrallink {
+  align-self: center;
+  font-size: 13px;
+  color: #78808F;
+  border-bottom: 1px dashed #D2CBBE;
+  padding-bottom: 2px;
+  transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+.referrallink:hover { color: var(--lang-a-deep); border-color: var(--lang-a-deep); }
+.referrallink.is-set {
+  color: var(--lang-a-deep);
+  border-bottom-style: solid;
+  border-color: var(--lang-a-deep);
+}
+
+/* 登录 / 注册互跳。与 .referrallink 同一套排版逻辑：
+   不写 display，只靠 align-self 居中 —— 这样 [hidden] 的 display:none 依然生效 */
+.authswitch {
+  align-self: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--lang-a-deep);
+  border-bottom: 1px solid rgba(14, 156, 122, 0.35);
+  padding-bottom: 2px;
+  transition: border-color 0.2s var(--ease), color 0.2s var(--ease);
+}
+.authswitch:hover { color: #0B7A5F; border-bottom-color: currentColor; }
+
+/* --------------------------------------------------------------------------
+   10. 弹窗（区域选择 / 推荐码 / 接入提示）
+   -------------------------------------------------------------------------- */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+.modal[hidden] { display: none; }
+
+.modal__mask {
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 8, 15, 0.72);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.modal__panel {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  border-radius: var(--r-lg);
+  background: var(--white);
+  color: var(--tx-on-light-hi);
+  padding: 26px 26px 22px;
+  box-shadow: 0 50px 100px -40px rgba(0, 0, 0, 0.9);
+}
+
+.modal__title {
+  font-size: 19px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.modal__desc {
+  font-size: 13.5px;
+  line-height: 1.8;
+  color: #6A7382;
+}
+
+.modal__desc strong { color: #C24A32; font-weight: 600; }
+
+/* 区域选项：卡片式单选 */
+.regionlist {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 20px 0 22px;
+}
+
+.regionopt {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 14px 16px;
+  border-radius: var(--r-md);
+  border: 1.5px solid #E2DED5;
+  background: var(--white);
+  text-align: left;
+  transition: border-color 0.2s var(--ease), background-color 0.2s var(--ease);
+}
+.regionopt:hover { border-color: #C6BEB0; background: #FCFBF8; }
+.regionopt[aria-pressed='true'] {
+  border-color: var(--tx-on-light-hi);
+  border-width: 2px;
+  padding: 13.5px 15.5px;
+}
+.regionopt__name {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--tx-on-light-hi);
+}
+.regionopt__note {
+  font-size: 12px;
+  line-height: 1.55;
+  color: #78808F;
+  margin-top: 2px;
+}
+.regionopt__flag { width: 22px; height: 22px; flex: none; }
+
+/* 名称与说明上下叠放（.regionopt 本身是横向 flex） */
+.regionopt__text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.modal__actions {
+  display: flex;
+  gap: 10px;
+}
+.modal__actions button {
+  flex: 1;
+  height: 46px;
+  border-radius: var(--r-sm);
+  font-size: 14.5px;
+  font-weight: 600;
+  transition: background-color 0.2s var(--ease), border-color 0.2s var(--ease),
+    color 0.2s var(--ease);
+}
+.modal__cancel {
+  border: 1px solid #DDD8CE;
+  background: var(--white);
+  color: #5D6674;
+}
+.modal__cancel:hover { background: #F5F3EE; border-color: #C6BEB0; }
+.modal__confirm {
+  background: var(--ink-1);
+  color: #F2F5F9;
+}
+.modal__confirm:hover { background: #16223A; }
+
+/* 推荐码输入 */
+.codefield {
+  margin: 18px 0 20px;
+}
+.codefield input {
+  width: 100%;
+  height: 50px;
+  padding: 0 14px;
+  border-radius: var(--r-sm);
+  border: 1px solid #D9D3C8;
+  font-size: 16px;
+  letter-spacing: 0.24em;
+  text-align: center;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+.codefield input:focus {
+  outline: none;
+  border-color: var(--lang-a-deep);
+  box-shadow: 0 0 0 3px rgba(14, 156, 122, 0.16);
+}
+.codefield .field__err { display: none; }
+.codefield.is-invalid .field__err { display: block; }
+.codefield.is-invalid input { border-color: #D2533A; }
+
+/* --------------------------------------------------------------------------
+   11. 轻提示
+   -------------------------------------------------------------------------- */
+.toasts {
+  position: fixed;
+  left: 50%;
+  bottom: 32px;
+  transform: translateX(-50%);
+  z-index: 300;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  pointer-events: none;
+  width: max-content;
+  max-width: calc(100vw - 32px);
+}
+
+.toast {
+  padding: 13px 20px;
+  border-radius: var(--r-pill);
+  background: #0F1828;
+  border: 1px solid var(--line-dark);
+  color: var(--tx-hi);
+  font-size: 13.5px;
+  line-height: 1.6;
+  box-shadow: 0 24px 50px -24px rgba(0, 0, 0, 0.95);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.toast svg { width: 17px; height: 17px; flex: none; }
+.toast--ok { border-color: rgba(18, 225, 176, 0.45); }
+.toast--ok svg { color: var(--lang-a); }
+.toast--warn { border-color: rgba(255, 122, 92, 0.45); }
+.toast--warn svg { color: var(--lang-b); }
+
+/* 演示模式徽章 */
+.demoflag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  align-self: flex-start;
+  padding: 6px 12px;
+  border-radius: var(--r-pill);
+  background: #FFF3E6;
+  border: 1px solid #F5D9B8;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #9A5B1E;
+  white-space: nowrap;
+}
+/* 必须给尺寸：内联 svg 不给宽高会按 viewBox 撑满，整个徽章被顶成大圆圈 */
+.demoflag svg { width: 15px; height: 15px; flex: none; }
+
+/* --------------------------------------------------------------------------
+   12. 页脚
+   -------------------------------------------------------------------------- */
+.authfoot {
+  padding: 26px 0 34px;
+  border-top: 1px solid var(--line-dark);
+}
+.authfoot__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+  font-size: 12.5px;
+  color: var(--tx-low);
+}
+.authfoot__links {
+  display: flex;
+  gap: 22px;
+  flex-wrap: wrap;
+}
+.authfoot__links a { transition: color 0.2s var(--ease); }
+.authfoot__links a:hover { color: var(--lang-a); }
+
+/* --------------------------------------------------------------------------
+   13. [hidden] 兜底（重要，改样式时别删）
+   浏览器默认的 [hidden] { display: none } 优先级极低，
+   任何显式 display（flex / inline-flex / grid / block）都会把它压掉。
+   凡是 JS 用 el.hidden = true 控制的元素，必须在这里显式兜底，
+   否则「隐藏」会静默失效 —— 本项目已经踩过两次。
+   （.modal[hidden] 已在第 10 节声明过，此处不重复）
+   -------------------------------------------------------------------------- */
+.field[hidden],
+.seg[hidden],
+.oauth button[hidden],
+.authswitch[hidden] { display: none; }
+
+/* --------------------------------------------------------------------------
+   14. 响应式
+   -------------------------------------------------------------------------- */
+@media (max-width: 1200px) {
+  .auth__grid { grid-template-columns: minmax(0, 1fr) 440px; gap: 48px; }
+}
+
+@media (max-width: 1024px) {
+  .auth { padding-top: calc(var(--nav-h) + 34px); }
+  .auth__grid { grid-template-columns: 1fr; gap: 40px; }
+  /* 单列时把表单提到前面：登录页第一诉求是「能填」，
+     让用户先滚过一整屏文案才能输入是不合理的 */
+  .auth__aside { order: 2; max-width: none; padding-top: 0; }
+  .auth__title { font-size: clamp(26px, 4.4vw, 36px); }
+  .authcard { order: 1; max-width: 520px; }
+}
+
+@media (max-width: 760px) {
+  .auth { padding-bottom: 60px; }
+  .authcard { padding: 22px 20px 24px; border-radius: var(--r-lg); }
+  .authcard__head { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .auth__points { gap: 13px; }
+  .field__row { flex-wrap: nowrap; }
+  .codebtn { padding: 0 14px; font-size: 13px; }
+  .authfoot__inner { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .modal { padding: 16px; }
+  .modal__panel { padding: 22px 20px 18px; }
+}

@@ -24,11 +24,15 @@
 lingora-site/
 ├── index.html                    落地页（产品说明、场景、版本计划、FAQ）
 ├── app.html                      工具页（真正的录音 + 转写工作台）
+├── login.html                    登录页（区域选择 → 验证码免密登录）
+├── register.html                 注册页（与登录页共用逻辑，靠 <body data-mode> 区分）
 ├── assets/
 │   ├── styles.css                落地页样式 + 全站设计令牌
 │   ├── main.js                   落地页交互（导航、演示窗、滚动揭示…）
 │   ├── app.css                   工具页样式（控制区深色 / 转写区暖白纸面）
 │   ├── app.js                    工具页逻辑（录音、双引擎识别、字幕导出）
+│   ├── auth.css                  账户页样式（全部复用 styles.css 的令牌）
+│   ├── auth.js                   账户页逻辑（区域、双语、校验、验证码、推荐码）
 │   └── vendor/                   自托管运行时与模型，见下节
 ├── .nojekyll                     关闭 GitHub Pages 的 Jekyll 处理
 ├── .gitignore                    排除 .verify/ 等本地校验产物
@@ -273,3 +277,78 @@ cp package/dist/{gsap,ScrollTrigger,CustomEase}.min.js assets/vendor/gsap/
 
 许可：GSAP 现为 Standard "no charge" license，核心与常用插件**免费含商用**，
 **无需 `.npmrc`、无需 auth token**。详见 `assets/vendor/gsap/README.md`。
+
+---
+
+## 账户体系（登录 / 注册）
+
+对照对象是 `app.transyncai.com`。它的关键特征是：**不是密码登录，而是验证码免密登录**，
+并且登录前有一个**必经的「选择服务器区域」步骤**。下面按参考站的真实行为逐项对照。
+
+### 与参考站逐项对照
+
+| 参考站功能 | 本站 | 说明 |
+|---|---|---|
+| 区域前置弹窗（中国区 / 国际区） | ✅ | 首次访问自动弹出，**不允许点遮罩跳过**；结果写入 localStorage |
+| 区域绑定语言（切国际区即转英文） | ✅ | `chooseRegion()` 里由区域决定默认语言 |
+| 手机登录 + `+86` 国家码 | ✅ | 国家码为本地循环切换 `+86/+852/+886/+1`，真实产品应换成完整选择器 |
+| 邮箱登录 | ✅ | 邮箱格式前端校验 |
+| 手机 / 邮箱 tab 切换 | ✅ | 国际区只剩邮箱，分段控件整块收起（参考站国际版也没有 tab 行） |
+| 6 位验证码 + 60 秒倒计时 | ⚠️ 前端演示 | 见「无法实现的部分」 |
+| 第三方登录：中国区仅 Apple | ✅ 入口 | 按钮真实存在，点击给出限制说明 |
+| 第三方登录：国际区 Google + Apple | ✅ 入口 | 同上 |
+| 推荐码（8 位字母数字） | ✅ | 弹窗输入、自动大写、长度校验、结果回显到入口 |
+| 协议勾选（未勾选不可提交） | ✅ | 未勾选时红框 + 提示条 |
+| 登录即注册（没有独立注册页） | ✅ 已照参考站行为 | 参考站确实没有注册页；`register.html` 是本站设计稿的增补 |
+| 忘记密码 | — 参考站没有 | 免密登录模型下不存在这个入口，不做 |
+| 主题切换按钮 | ❌ 未实现 | 参考站登录弹窗外有一个明暗切换，属非账户功能 |
+| 桌面端窗口控件 | ❌ 不适用 | 参考站是 Electron 桌面壳，本站在浏览器里跑 |
+
+### 为什么「没有独立的注册页」
+
+参考产品把注册并进了登录：**首次验证码登录就等于完成注册**，因此它没有 `/signup` 路由
+（实测 `/cn/login`、`/cn/signup`、`/cn/register` 全部回落首页 SPA）。
+
+`register.html` 是按本项目设计稿（Ardot 屏 `3:5`）保留的独立入口。它与 `login.html`
+**共用同一份 `auth.js`**，只靠 `<body data-mode="register">` 切换标题、主按钮、
+左侧文案与成功提示；两页共用同一套校验与同一份 localStorage 契约。
+
+### 无法实现的部分（静态站的固有限制）
+
+这几项**不是没做，是静态站做不到**。每一处都在界面上写了明确说明，不留「看起来能用其实没接」的假象。
+
+| 功能 | 为什么做不到 | 页面上怎么交代 | 替代方案 |
+|---|---|---|---|
+| 短信 / 邮件下发验证码 | 需要服务端 + 短信 / 邮件服务商资质，纯静态站没有后端 | 点「获取验证码」后用提示条显示演示码，并写明「真实环境由短信 / 邮件下发」 | 云函数（CloudBase / Vercel Function）调用短信 API |
+| 验证码校验 | 校验必须在服务端，前端校验等于没有校验 | 演示码比对只在前端，`auth.js` 顶部注释已标注 | 服务端存 code + 过期时间 + 尝试次数 |
+| 登录态 / 会话 | 静态站没有服务端会话，localStorage 谁都能改 | 左侧注明「登录态只存在你的浏览器本地」 | 服务端下发 **HttpOnly + Secure + SameSite Cookie**，前端不自行判定登录成功 |
+| 第三方登录（Google / Apple） | 需要 Client ID、重定向 URI 与服务端换 token 的回调地址 | 点击后提示「需要客户端 ID 与服务端回调，静态站无法完成」 | 走 OAuth 2.0 授权码流程，回调落在服务端 |
+| 用户服务协议 / 隐私协议全文 | 属法务文案，演示站不含 | 协议链接不跳转，改为提示「演示站未包含协议全文，正式上线前需接入法务文案」 | 补 `terms.html` / `privacy.html`，入口改成真实链接 |
+| 找回密码 | 免密登录模型下不存在 | — | 若改为密码登录，需服务端重置令牌流程 |
+| 账号数据同步 | 无后端、无数据库 | 会话只记录最后一个登录标识 | 服务端用户表 + 设备会话管理 |
+
+### 上线前必须替换的 3 处
+
+1. `auth.js` 中 `state.demoCode` 的本地生成与比对 → 换成 `POST /api/send-code` + `POST /api/verify-code`
+2. `write(STORE.session, ...)` 的 localStorage 会话 → 换成服务端 `Set-Cookie`
+3. `render()` 里 `el.oauthGoogle.hidden = ...` 的按钮 → 换成真实 OAuth 跳转
+
+### 踩过的两个坑（改样式 / 改交互时注意）
+
+1. **`[hidden]` 会被显式 `display` 压掉。** 浏览器默认的 `[hidden] { display: none }` 优先级极低，
+   `.field { display: flex }`、`.oauth button { display: inline-flex }`、`.modal { display: grid }`
+   都会让它失效。`auth.css` 第 13 节集中做了兜底（`.field[hidden]`、`.seg[hidden]`、
+   `.oauth button[hidden]`、`.authswitch[hidden]`、`.modal[hidden]`），**这一段别删**。
+2. **`#authSubmit` 是 `type="submit"`，必须 `preventDefault()`。** 不拦原生提交的话浏览器会以
+   GET 重载本页，与「900 ms 后写会话 → 跳 app.html」抢跑，表现为偶发停在 `login.html?` 且会话丢失。
+
+### 验证
+
+```bash
+python -m http.server 8088 --bind 127.0.0.1
+NODE_PATH=<playwright 所在 node_modules> node .verify/verify-auth.js
+```
+
+覆盖 109 项：区域弹窗与不可跳过、中国区 / 国际区差异、中英联动、手机号 3-4-4 分组、
+空值 / 格式 / 验证码 / 协议四类校验、60 秒倒计时、提交加载态、跳转与退出登录、
+推荐码弹窗与校验、1440 / 1024 / 390 三档视口、`reduced-motion` 降级、四个页面控制台零错误。

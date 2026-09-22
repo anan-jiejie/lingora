@@ -34,12 +34,46 @@
     <div class="app-nav__actions">
       <span class="privacy-chip" title="本地模型模式下音频不会离开你的设备">
         <span class="privacy-chip__dot" aria-hidden="true"></span>
-        无需注册 · 音频不外传
+        音频不外传
       </span>
+      <span class="privacy-chip" id="sessionChip" style="display:none" title="当前登录的账号">
+        <span class="privacy-chip__dot" aria-hidden="true"></span>
+        已登录：<span id="sessionName"></span>
+      </span>
+      <button class="btn btn--ghost btn--sm" type="button" id="signOutBtn" style="display:none">退出登录</button>
       <a class="btn btn--ghost btn--sm" href="index.html">返回首页</a>
     </div>
   </div>
 </header>
+
+<script>
+/* 账户入口
+   读取登录态并给出「退出」——登录态是 localStorage 模拟的，
+   真实产品应由服务端下发 HttpOnly Cookie，前端不做登录判定。
+   这里用 style.display 而不是 hidden 属性：.btn / .privacy-chip 都带
+   display: inline-flex，会压掉浏览器默认的 [hidden] { display: none }。 */
+(function () {
+  var raw = null;
+  try { raw = localStorage.getItem('lingora.auth.session'); } catch (e) { raw = null; }
+  if (!raw) return;
+
+  var info = {};
+  try { info = JSON.parse(raw) || {}; } catch (e) { info = {}; }
+
+  var chip = document.getElementById('sessionChip');
+  var name = document.getElementById('sessionName');
+  var out = document.getElementById('signOutBtn');
+
+  if (name) name.textContent = info.target || '—';
+  if (chip) chip.style.display = '';
+  if (!out) return;
+  out.style.display = '';
+  out.addEventListener('click', function () {
+    try { localStorage.removeItem('lingora.auth.session'); } catch (e) { /* 隐私模式 */ }
+    window.location.href = 'login.html';
+  });
+})();
+</script>
 
 <main class="app-main" id="workspace">
 
