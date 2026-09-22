@@ -144,6 +144,9 @@ env.backends.onnx.wasm.wasmPaths = vendorBase + 'ort/';
 
 两者控制台均零报错、零请求失败。base 准确率明显更好（`your country` 正确，tiny 误作 `you are country`），所以默认用 base。
 
+**加载失败会自动降级**：弱网下大模型可能读不下来，此时会自动改用更小的 tiny 继续，
+并同步更新下拉框，保证界面显示的模型与实际使用的一致（见 `getPipelineWithFallback()`）。
+
 ## 已知边界
 
 - 浏览器实时识别**不返回逐句时间点**，导出的字幕时间戳按每句识别到的时刻估算；要精确到句需改用本地模型
@@ -151,3 +154,20 @@ env.backends.onnx.wasm.wasmPaths = vendorBase + 'ort/';
 - 本地模型处理长录音耗时与音频长度大致成正比，建议单段 30 分钟以内
 - Firefox 不支持 `SpeechRecognition`，建议用 Chrome / Edge
 - 仓库含 137 MB 自托管模型，`git clone` 与首次推送会比较慢
+- 弱网下大模型可能加载超时，此时会自动降级到 tiny
+
+## 推送这个大仓库的注意点
+
+137 MB 一次性推会被断（`RPC failed; curl 56 schannel: server closed abruptly`）。
+实测**拆成多个小提交分批推**就顺利通过（2.5 MB + 22 MB + 51 MB 三批全部一次成功）：
+
+```bash
+# 分批 commit 后，按顺序推（用 API 校验才准，git 失败时可能打印
+# "Everything up-to-date" 的假信号）
+curl -s -H "Authorization: Bearer $PAT" \
+  https://api.github.com/repos/anan-jiejie/lingora/commits/main \
+  | tr ',' '\n' | grep -m1 '"sha"'
+```
+
+另外 `.gitattributes` 里的 `assets/vendor/** -text -diff` 不能少——
+本机 `core.autocrlf=true` 会把模型和 tokenizer 的换行符改掉，造成内容漂移。
