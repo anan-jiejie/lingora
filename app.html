@@ -48,30 +48,56 @@
 
 <script>
 /* 账户入口
-   读取登录态并给出「退出」——登录态是 localStorage 模拟的，
-   真实产品应由服务端下发 HttpOnly Cookie，前端不做登录判定。
-   这里用 style.display 而不是 hidden 属性：.btn / .privacy-chip 都带
+
+   工具页**不需要登录就能用**。这段脚本只做一件事：
+   如果用户登录过，就在顶栏补上账号与「退出登录」按钮；
+   没登录过、或者拿不到后端，就只是不显示而已 —— 不跳转、不拦截。
+
+   服务端同理：/app.html 是公开静态资源，不做任何重定向。
+
+   用 style.display 而不是 hidden 属性：.btn / .privacy-chip 都带
    display: inline-flex，会压掉浏览器默认的 [hidden] { display: none }。 */
 (function () {
-  var raw = null;
-  try { raw = localStorage.getItem('lingora.auth.session'); } catch (e) { raw = null; }
-  if (!raw) return;
-
-  var info = {};
-  try { info = JSON.parse(raw) || {}; } catch (e) { info = {}; }
-
   var chip = document.getElementById('sessionChip');
   var name = document.getElementById('sessionName');
   var out = document.getElementById('signOutBtn');
 
-  if (name) name.textContent = info.target || '—';
-  if (chip) chip.style.display = '';
-  if (!out) return;
-  out.style.display = '';
-  out.addEventListener('click', function () {
-    try { localStorage.removeItem('lingora.auth.session'); } catch (e) { /* 隐私模式 */ }
-    window.location.href = 'login.html';
-  });
+  function show(info, preview) {
+    if (name) name.textContent = (info.target || '—') + (preview ? ' · 预览' : '');
+    if (chip) chip.style.display = '';
+    if (out) out.style.display = '';
+  }
+
+  /* 离线（纯静态镜像 / file://）时读本地会话，只用来显示账号 */
+  function localSession() {
+    var raw = null;
+    try { raw = localStorage.getItem('lingora.auth.session'); } catch (e) { raw = null; }
+    if (!raw) return null;
+    try { return JSON.parse(raw) || null; } catch (e) { return null; }
+  }
+
+  function showLocalIfAny() {
+    var info = localSession();
+    if (info && info.target) show(info, !!info.preview);
+  }
+
+  if (out) {
+    out.addEventListener('click', function () {
+      out.disabled = true;
+      try { localStorage.removeItem('lingora.auth.session'); } catch (e) { /* 隐私模式 */ }
+      fetch('/api/logout', { method: 'POST', credentials: 'same-origin' })
+        .catch(function () { /* 后端不可达也要完成本地退出 */ })
+        .then(function () { window.location.href = 'login.html'; });
+    });
+  }
+
+  fetch('/api/session', { credentials: 'same-origin' })
+    .then(function (r) { return r.json(); })
+    .then(function (d) {
+      if (d && d.authed) show(d, false);
+      else showLocalIfAny();
+    })
+    .catch(showLocalIfAny);
 })();
 </script>
 

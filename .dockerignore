@@ -1,0 +1,14 @@
+# 构建镜像时排除的内容（部署体积从 148MB 降到 ~1MB）
+.git
+.gitignore
+.gitattributes
+.verify
+node_modules
+**/*.md
+README.md
+
+# Whisper 模型与 onnxruntime 二进制（合计 137MB）
+# 后端服务本身不需要它们；如需在线转写，应单独放到对象存储 / 静态托管，
+# 由前端按绝对 URL 加载，而不是打进服务镜像
+assets/vendor/models
+assets/vendor/ort

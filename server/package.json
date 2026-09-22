@@ -1,0 +1,17 @@
+{
+  "name": "lingora-account-server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Lingora 账户后端：图形验证码 + 一次性验证码 + HttpOnly 会话 + 服务端登录门禁（零 npm 依赖）",
+  "main": "app.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "node app.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {},
+  "license": "MIT"
+}
